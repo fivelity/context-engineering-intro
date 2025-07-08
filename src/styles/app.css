@@ -1,0 +1,196 @@
+@import '@skeletonlabs/skeleton/themes/theme-skeleton.css';
+@import '@skeletonlabs/skeleton/styles/skeleton.css';
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Global styles */
+html, body { 
+	@apply h-full overflow-hidden; 
+}
+
+/* Dashboard specific styles */
+.dashboard-container {
+	@apply h-screen w-full overflow-hidden bg-surface-50-900-token;
+}
+
+.dashboard-grid {
+	@apply relative w-full h-full overflow-auto;
+	display: grid;
+	gap: 0.5rem;
+	padding: 1rem;
+	grid-auto-rows: 32px;
+}
+
+/* Widget styles */
+.widget-container {
+	@apply bg-surface-100-800-token border border-surface-300-600-token rounded-lg shadow-md;
+	@apply transition-all duration-200 hover:shadow-lg;
+	@apply relative overflow-hidden;
+	min-height: 96px;
+	min-width: 128px;
+}
+
+.widget-container.dragging {
+	@apply shadow-xl scale-105 z-50;
+	@apply ring-2 ring-primary-500;
+}
+
+.widget-container.resizing {
+	@apply shadow-lg;
+	@apply ring-2 ring-secondary-500;
+}
+
+.widget-header {
+	@apply p-2 border-b border-surface-300-600-token;
+	@apply text-sm font-medium text-surface-700-200-token;
+}
+
+.widget-content {
+	@apply p-4 h-full;
+}
+
+/* Sensor value displays */
+.sensor-value {
+	@apply text-2xl font-mono font-bold;
+}
+
+.sensor-value.thermal-low { color: var(--sensor-thermal-low); }
+.sensor-value.thermal-medium { color: var(--sensor-thermal-medium); }
+.sensor-value.thermal-high { color: var(--sensor-thermal-high); }
+
+.sensor-value.performance-low { color: var(--sensor-performance-low); }
+.sensor-value.performance-medium { color: var(--sensor-performance-medium); }
+.sensor-value.performance-high { color: var(--sensor-performance-high); }
+
+/* Gauge specific styles */
+.gauge-container {
+	@apply relative flex items-center justify-center;
+}
+
+.gauge-svg {
+	@apply drop-shadow-sm;
+}
+
+/* Grid overlay */
+.grid-overlay {
+	@apply absolute inset-0 pointer-events-none z-10;
+	background-image: 
+		linear-gradient(rgba(var(--color-surface-400) / 0.2) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(var(--color-surface-400) / 0.2) 1px, transparent 1px);
+	background-size: 32px 32px;
+}
+
+/* Toolbar styles */
+.toolbar {
+	@apply bg-surface-200-700-token border-b border-surface-300-600-token;
+	@apply flex items-center justify-between px-4 py-2;
+	@apply shadow-sm;
+}
+
+.toolbar-section {
+	@apply flex items-center gap-2;
+}
+
+/* Modal styles */
+.modal-backdrop {
+	@apply fixed inset-0 bg-surface-900/50 z-50;
+	@apply flex items-center justify-center p-4;
+}
+
+.modal-content {
+	@apply bg-surface-100-800-token rounded-lg shadow-xl;
+	@apply border border-surface-300-600-token;
+	@apply max-w-2xl w-full max-h-[90vh] overflow-auto;
+}
+
+.modal-header {
+	@apply p-4 border-b border-surface-300-600-token;
+	@apply flex items-center justify-between;
+}
+
+.modal-body {
+	@apply p-4;
+}
+
+.modal-footer {
+	@apply p-4 border-t border-surface-300-600-token;
+	@apply flex items-center justify-end gap-2;
+}
+
+/* Form styles */
+.form-group {
+	@apply space-y-2;
+}
+
+.form-label {
+	@apply block text-sm font-medium text-surface-700-200-token;
+}
+
+.form-input {
+	@apply w-full px-3 py-2 border border-surface-300-600-token rounded-md;
+	@apply bg-surface-50-900-token text-surface-900-50-token;
+	@apply focus:ring-2 focus:ring-primary-500 focus:border-transparent;
+}
+
+.form-select {
+	@apply w-full px-3 py-2 border border-surface-300-600-token rounded-md;
+	@apply bg-surface-50-900-token text-surface-900-50-token;
+	@apply focus:ring-2 focus:ring-primary-500 focus:border-transparent;
+}
+
+/* Button variants */
+.btn-primary {
+	@apply bg-primary-500 hover:bg-primary-600 text-white;
+	@apply px-4 py-2 rounded-md font-medium;
+	@apply transition-colors duration-200;
+}
+
+.btn-secondary {
+	@apply bg-surface-200-700-token hover:bg-surface-300-600-token;
+	@apply text-surface-700-200-token px-4 py-2 rounded-md font-medium;
+	@apply transition-colors duration-200;
+}
+
+.btn-danger {
+	@apply bg-error-500 hover:bg-error-600 text-white;
+	@apply px-4 py-2 rounded-md font-medium;
+	@apply transition-colors duration-200;
+}
+
+/* Utility classes */
+.text-sensor-thermal {
+	color: var(--sensor-thermal-medium);
+}
+
+.text-sensor-performance {
+	color: var(--sensor-performance-medium);
+}
+
+/* Animation utilities */
+.animate-pulse-data {
+	animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+	0%, 100% { opacity: 1; }
+	50% { opacity: 0.7; }
+}
+
+/* Responsive utilities */
+@media (max-width: 768px) {
+	.dashboard-grid {
+		grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+		gap: 0.25rem;
+		padding: 0.5rem;
+	}
+	
+	.widget-container {
+		min-height: 80px;
+		min-width: 120px;
+	}
+	
+	.toolbar {
+		@apply px-2 py-1;
+	}
+}
