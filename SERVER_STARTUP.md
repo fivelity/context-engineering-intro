@@ -4,6 +4,23 @@ This guide explains how to start both the FastAPI backend and SvelteKit frontend
 
 ## Quick Start
 
+### First Time Setup (Required)
+
+**Download Hardware Monitoring DLL:**
+```bash
+# Linux/macOS
+./download-dll.sh
+
+# Windows
+download-dll.bat
+
+# Using npm (any platform)
+npm run setup:dll
+
+# Complete setup (DLL + dependencies)
+npm run setup:all
+```
+
 ### Option 1: Using the startup script (Recommended)
 
 **Linux/macOS:**

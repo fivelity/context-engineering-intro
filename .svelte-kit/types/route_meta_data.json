@@ -1,3 +1,9 @@
 {
-	"/": []
+	"/": [],
+	"/api/ai-layout": [
+		"src/routes/api/ai-layout/+server.ts"
+	],
+	"/api/sensors": [
+		"src/routes/api/sensors/+server.ts"
+	]
 }

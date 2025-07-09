@@ -45,6 +45,23 @@ start_backend() {
     
     cd backend/fastapi
     
+    # Check if LibreHardwareMonitorLib.dll exists
+    if [ ! -f "LibreHardwareMonitorLib.dll" ]; then
+        echo -e "${YELLOW}⚠️  LibreHardwareMonitorLib.dll not found${NC}"
+        echo -e "${BLUE}💡 This DLL is required for hardware monitoring functionality${NC}"
+        read -p "Would you like to download it now? (y/N): " -n 1 -r
+        echo
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            cd ../..
+            echo -e "${BLUE}📥 Downloading LibreHardwareMonitorLib.dll...${NC}"
+            ./download-dll.sh
+            cd backend/fastapi
+        else
+            echo -e "${YELLOW}⚠️  Continuing without hardware monitoring DLL${NC}"
+            echo -e "${BLUE}💡 You can download it later with: npm run setup:dll${NC}"
+        fi
+    fi
+    
     # Activate virtual environment
     source ../../venv_linux/bin/activate
     

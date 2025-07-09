@@ -42,23 +42,34 @@ export interface AlertCondition {
 	id: string;
 	name: string;
 	sensorPath: string;
-	operator: 'gt' | 'lt' | 'eq' | 'gte' | 'lte';
+	operator: 'greater' | 'less' | 'equal' | 'not_equal' | 'greater_equal' | 'less_equal';
 	threshold: number;
 	unit: string;
 	enabled: boolean;
 	triggered: boolean;
-	lastTriggered?: number;
+	lastTriggered: number | null;
+	cooldown?: number;
 	notificationEnabled: boolean;
-	severity: 'low' | 'medium' | 'high' | 'critical';
+	severity: 'info' | 'warning' | 'critical';
+	createdAt: number;
 }
 
 export interface Alert {
 	id: string;
-	condition: string;
+	conditionId: string;
+	conditionName: string;
+	sensorPath: string;
 	value: number;
+	threshold: number;
+	operator: string;
 	timestamp: number;
 	acknowledged: boolean;
-	severity: 'low' | 'medium' | 'high' | 'critical';
+	severity: 'info' | 'warning' | 'critical';
+}
+
+export interface AlertHistory {
+	alerts: Alert[];
+	maxSize: number;
 }
 
 export interface WidgetRegistration {

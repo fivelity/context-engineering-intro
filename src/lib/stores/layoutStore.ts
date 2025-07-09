@@ -32,7 +32,7 @@ const CONFIG_STORAGE_KEY = 'sensecanvas-config';
 
 export const layoutStore = {
 	// Getters for reactive data
-	get widgets() { return widgets; },
+	get widgets() { return Array.from(widgets.values()); },
 	get layout() { return layout; },
 	get gridConfig() { return gridConfig; },
 	get isDirty() { return isDirty; },
@@ -40,6 +40,7 @@ export const layoutStore = {
 	get autoSave() { return autoSave; },
 	get isLoading() { return isLoading; },
 	get widgetCount() { return widgets.size; },
+	get gridSize() { return gridConfig; },
 
 	// Initialize store
 	init() {
@@ -447,5 +448,179 @@ export const layoutStore = {
 
 	forceSave(): void {
 		this.saveToStorage();
+	},
+
+	// Additional methods for Dashboard component
+	loadLayout(): void {
+		this.loadFromStorage();
+	},
+
+	saveLayout(): void {
+		this.saveToStorage();
+	},
+
+	resetLayout(): void {
+		this.clearLayout();
+	},
+
+	initializeDefaultLayout(): void {
+		// Create default widgets if none exist
+		if (widgets.size === 0) {
+			const defaultWidgets = [
+				{
+					id: 'cpu-usage',
+					type: 'gauge',
+					title: 'CPU Usage',
+					sensorPath: 'cpu.usage',
+					position: { x: 0, y: 0 },
+					size: { w: 200, h: 200 },
+					appearance: {
+						colors: ['#22c55e', '#f59e0b', '#ef4444'],
+						typography: { fontSize: 16, fontWeight: '500', color: '#374151' },
+						borders: { thickness: 1, style: 'solid', radius: 8 },
+						chartParams: { segments: 60, startAngle: 0, endAngle: 270 }
+					},
+					alerts: [],
+					minSize: { w: 150, h: 150 },
+					maxSize: { w: 400, h: 400 }
+				},
+				{
+					id: 'cpu-temp',
+					type: 'gauge',
+					title: 'CPU Temperature',
+					sensorPath: 'cpu.temperature',
+					position: { x: 220, y: 0 },
+					size: { w: 200, h: 200 },
+					appearance: {
+						colors: ['#22c55e', '#f59e0b', '#ef4444'],
+						typography: { fontSize: 16, fontWeight: '500', color: '#374151' },
+						borders: { thickness: 1, style: 'solid', radius: 8 },
+						chartParams: { segments: 60, startAngle: 0, endAngle: 270 }
+					},
+					alerts: [],
+					minSize: { w: 150, h: 150 },
+					maxSize: { w: 400, h: 400 }
+				},
+				{
+					id: 'memory-usage',
+					type: 'meter',
+					title: 'Memory Usage',
+					sensorPath: 'memory.usage',
+					position: { x: 0, y: 220 },
+					size: { w: 300, h: 100 },
+					appearance: {
+						colors: ['#3b82f6', '#8b5cf6', '#ec4899'],
+						typography: { fontSize: 14, fontWeight: '500', color: '#374151' },
+						borders: { thickness: 1, style: 'solid', radius: 8 },
+						chartParams: { barThickness: 20 }
+					},
+					alerts: [],
+					minSize: { w: 200, h: 80 },
+					maxSize: { w: 500, h: 150 }
+				}
+			];
+
+			for (const widget of defaultWidgets) {
+				widgets.set(widget.id, widget as WidgetConfig);
+				layout[widget.id] = widget.position;
+			}
+
+			this.markDirty();
+		}
+	},
+
+	loadPreset(presetId: string): void {
+		// Load predefined layouts
+		const presets: Record<string, WidgetConfig[]> = {
+			default: [
+				{
+					id: 'cpu-usage',
+					type: 'gauge',
+					title: 'CPU Usage',
+					sensorPath: 'cpu.usage',
+					position: { x: 0, y: 0 },
+					size: { w: 200, h: 200 },
+					appearance: {
+						colors: ['#22c55e', '#f59e0b', '#ef4444'],
+						typography: { fontSize: 16, fontWeight: '500', color: '#374151' },
+						borders: { thickness: 1, style: 'solid', radius: 8 },
+						chartParams: { segments: 60, startAngle: 0, endAngle: 270 }
+					},
+					alerts: [],
+					minSize: { w: 150, h: 150 },
+					maxSize: { w: 400, h: 400 }
+				}
+			],
+			performance: [
+				{
+					id: 'cpu-perf',
+					type: 'multi-resource',
+					title: 'System Performance',
+					sensorPath: 'cpu.usage',
+					position: { x: 0, y: 0 },
+					size: { w: 400, h: 300 },
+					appearance: {
+						colors: ['#3b82f6', '#8b5cf6', '#ec4899'],
+						typography: { fontSize: 14, fontWeight: '500', color: '#374151' },
+						borders: { thickness: 1, style: 'solid', radius: 8 },
+						chartParams: {}
+					},
+					alerts: [],
+					minSize: { w: 300, h: 200 },
+					maxSize: { w: 600, h: 500 }
+				}
+			],
+			thermal: [
+				{
+					id: 'thermal-overview',
+					type: 'graph',
+					title: 'Thermal Overview',
+					sensorPath: 'cpu.temperature',
+					position: { x: 0, y: 0 },
+					size: { w: 500, h: 300 },
+					appearance: {
+						colors: ['#22c55e', '#f59e0b', '#ef4444'],
+						typography: { fontSize: 14, fontWeight: '500', color: '#374151' },
+						borders: { thickness: 1, style: 'solid', radius: 8 },
+						chartParams: { strokeWidth: 2 }
+					},
+					alerts: [],
+					minSize: { w: 300, h: 200 },
+					maxSize: { w: 800, h: 500 }
+				}
+			],
+			compact: [
+				{
+					id: 'compact-cpu',
+					type: 'simple',
+					title: 'CPU',
+					sensorPath: 'cpu.usage',
+					position: { x: 0, y: 0 },
+					size: { w: 100, h: 60 },
+					appearance: {
+						colors: ['#22c55e', '#f59e0b', '#ef4444'],
+						typography: { fontSize: 12, fontWeight: '500', color: '#374151' },
+						borders: { thickness: 1, style: 'solid', radius: 4 },
+						chartParams: {}
+					},
+					alerts: [],
+					minSize: { w: 80, h: 40 },
+					maxSize: { w: 150, h: 100 }
+				}
+			]
+		};
+
+		const preset = presets[presetId];
+		if (preset) {
+			widgets.clear();
+			layout = {};
+
+			for (const widget of preset) {
+				widgets.set(widget.id, widget);
+				layout[widget.id] = widget.position;
+			}
+
+			this.markDirty();
+		}
 	}
 };

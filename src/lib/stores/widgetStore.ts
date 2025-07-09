@@ -561,5 +561,6 @@ export const widgetStore = {
 	getWidgetCount,
 	getPresetCount,
 	searchWidgets,
-	searchPresets
+	searchPresets,
+	initializePresets: () => initializeStore()
 };

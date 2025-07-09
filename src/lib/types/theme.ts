@@ -1,5 +1,29 @@
 // Theme system types
-export interface Theme {
+export type Theme = 'light' | 'dark';
+
+export interface ThemeConfig {
+	colorScheme: 'system' | 'light' | 'dark';
+	sensorColors: {
+		temperature: string[];
+		usage: string[];
+		voltage: string[];
+		fan: string[];
+	};
+	customColors: {
+		primary: string;
+		secondary: string;
+		accent: string;
+		warning: string;
+		error: string;
+		success: string;
+	};
+	fontSize: 'small' | 'base' | 'large';
+	fontFamily: 'system' | 'mono' | 'serif';
+	borderRadius: 'none' | 'small' | 'medium' | 'large' | 'full';
+	animations: boolean;
+}
+
+export interface ThemeDefinition {
 	name: string;
 	displayName: string;
 	type: 'light' | 'dark' | 'auto';

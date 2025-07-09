@@ -16,7 +16,9 @@
     "format": "prettier --write .",
     "start": "./start-servers.sh",
     "start:backend": "cd backend/fastapi && source ../../venv_linux/bin/activate && python main.py",
-    "start:frontend": "npm run dev"
+    "start:frontend": "npm run dev",
+    "setup:dll": "./download-dll.sh",
+    "setup:all": "./download-dll.sh && npm install && cd backend/fastapi && pip install -r requirements.txt"
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "^3.0.0",
