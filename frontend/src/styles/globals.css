@@ -1,0 +1,324 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global CSS Custom Properties */
+:root {
+  /* Default theme variables - Cyberpunk */
+  --sci-fi-primary: #7c3aed;
+  --sci-fi-secondary: #fbbf24;
+  --sci-fi-accent: #ec4899;
+  --sci-fi-background: #0f0f23;
+  --sci-fi-surface: #1e1b4b;
+  --sci-fi-text: #e2e8f0;
+  --sci-fi-text-muted: #94a3b8;
+  --sci-fi-border: #475569;
+  --sci-fi-success: #10b981;
+  --sci-fi-warning: #f59e0b;
+  --sci-fi-error: #ef4444;
+  
+  /* Animation speeds */
+  --sci-fi-transition-fast: 150ms;
+  --sci-fi-transition-normal: 300ms;
+  --sci-fi-transition-slow: 500ms;
+  
+  /* Glow intensities */
+  --sci-fi-glow-subtle: 0 0 5px;
+  --sci-fi-glow-normal: 0 0 10px;
+  --sci-fi-glow-intense: 0 0 20px;
+}
+
+/* Theme-specific CSS Custom Properties */
+[data-theme="cyberpunk"] {
+  --sci-fi-primary: #7c3aed;
+  --sci-fi-secondary: #fbbf24;
+  --sci-fi-accent: #ec4899;
+  --sci-fi-background: #0f0f23;
+  --sci-fi-surface: #1e1b4b;
+  --sci-fi-text: #e2e8f0;
+  --sci-fi-text-muted: #94a3b8;
+  --sci-fi-border: #475569;
+  --sci-fi-success: #10b981;
+  --sci-fi-warning: #f59e0b;
+  --sci-fi-error: #ef4444;
+}
+
+[data-theme="neon"] {
+  --sci-fi-primary: #00ffff;
+  --sci-fi-secondary: #ff8c00;
+  --sci-fi-accent: #ff1493;
+  --sci-fi-background: #000000;
+  --sci-fi-surface: #111111;
+  --sci-fi-text: #ffffff;
+  --sci-fi-text-muted: #cccccc;
+  --sci-fi-border: #333333;
+  --sci-fi-success: #00ff00;
+  --sci-fi-warning: #ffff00;
+  --sci-fi-error: #ff0000;
+}
+
+[data-theme="gaming"] {
+  --sci-fi-primary: #00ff88;
+  --sci-fi-secondary: #0ea5e9;
+  --sci-fi-accent: #a855f7;
+  --sci-fi-background: #0a0e1a;
+  --sci-fi-surface: #1a202c;
+  --sci-fi-text: #f7fafc;
+  --sci-fi-text-muted: #a0aec0;
+  --sci-fi-border: #4a5568;
+  --sci-fi-success: #38a169;
+  --sci-fi-warning: #ed8936;
+  --sci-fi-error: #e53e3e;
+}
+
+[data-theme="corporate"] {
+  --sci-fi-primary: #3b82f6;
+  --sci-fi-secondary: #64748b;
+  --sci-fi-accent: #06b6d4;
+  --sci-fi-background: #0f172a;
+  --sci-fi-surface: #1e293b;
+  --sci-fi-text: #f1f5f9;
+  --sci-fi-text-muted: #94a3b8;
+  --sci-fi-border: #475569;
+  --sci-fi-success: #059669;
+  --sci-fi-warning: #d97706;
+  --sci-fi-error: #dc2626;
+}
+
+[data-theme="matrix"] {
+  --sci-fi-primary: #00ff00;
+  --sci-fi-secondary: #000000;
+  --sci-fi-accent: #008000;
+  --sci-fi-background: #000000;
+  --sci-fi-surface: #001100;
+  --sci-fi-text: #00ff00;
+  --sci-fi-text-muted: #008000;
+  --sci-fi-border: #004400;
+  --sci-fi-success: #00ff00;
+  --sci-fi-warning: #ffff00;
+  --sci-fi-error: #ff0000;
+}
+
+/* Base styles */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--sci-fi-background);
+  color: var(--sci-fi-text);
+  font-family: 'JetBrains Mono', 'Fira Code', 'Monaco', 'Consolas', monospace;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--sci-fi-surface);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--sci-fi-accent);
+  border-radius: 4px;
+  box-shadow: var(--sci-fi-glow-subtle) var(--sci-fi-accent);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--sci-fi-primary);
+  box-shadow: var(--sci-fi-glow-normal) var(--sci-fi-primary);
+}
+
+/* Sci-Fi Component Base Classes */
+.sci-fi-frame {
+  background: var(--sci-fi-surface);
+  border: 1px solid var(--sci-fi-border);
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.sci-fi-frame::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--sci-fi-accent) 50%,
+    transparent 100%
+  );
+  opacity: 0.6;
+}
+
+.sci-fi-glow {
+  box-shadow: var(--sci-fi-glow-normal) var(--sci-fi-accent);
+  transition: box-shadow var(--sci-fi-transition-normal) ease;
+}
+
+.sci-fi-glow:hover {
+  box-shadow: var(--sci-fi-glow-intense) var(--sci-fi-accent);
+}
+
+.sci-fi-text-glow {
+  text-shadow: var(--sci-fi-glow-subtle) var(--sci-fi-accent);
+}
+
+.sci-fi-border-glow {
+  border-color: var(--sci-fi-accent);
+  box-shadow: 
+    inset 0 0 10px var(--sci-fi-accent)20,
+    0 0 10px var(--sci-fi-accent)40;
+}
+
+/* Animation Classes */
+.sci-fi-pulse {
+  animation: sci-fi-pulse 2s ease-in-out infinite;
+}
+
+@keyframes sci-fi-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.02);
+  }
+}
+
+.sci-fi-scan {
+  position: relative;
+  overflow: hidden;
+}
+
+.sci-fi-scan::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--sci-fi-accent) 50%,
+    transparent 100%
+  );
+  animation: sci-fi-scan-line 3s linear infinite;
+}
+
+@keyframes sci-fi-scan-line {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+/* Utility Classes */
+.text-sci-fi-primary { color: var(--sci-fi-primary); }
+.text-sci-fi-secondary { color: var(--sci-fi-secondary); }
+.text-sci-fi-accent { color: var(--sci-fi-accent); }
+.text-sci-fi-success { color: var(--sci-fi-success); }
+.text-sci-fi-warning { color: var(--sci-fi-warning); }
+.text-sci-fi-error { color: var(--sci-fi-error); }
+
+.bg-sci-fi-background { background-color: var(--sci-fi-background); }
+.bg-sci-fi-surface { background-color: var(--sci-fi-surface); }
+.bg-sci-fi-primary { background-color: var(--sci-fi-primary); }
+.bg-sci-fi-accent { background-color: var(--sci-fi-accent); }
+
+.border-sci-fi-primary { border-color: var(--sci-fi-primary); }
+.border-sci-fi-accent { border-color: var(--sci-fi-accent); }
+.border-sci-fi-border { border-color: var(--sci-fi-border); }
+
+/* Focus styles for accessibility */
+.focus-sci-fi:focus {
+  outline: 2px solid var(--sci-fi-accent);
+  outline-offset: 2px;
+  box-shadow: var(--sci-fi-glow-normal) var(--sci-fi-accent);
+}
+
+/* Selection styling */
+::selection {
+  background-color: var(--sci-fi-accent);
+  color: var(--sci-fi-background);
+}
+
+/* Loading states */
+.sci-fi-loading {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--sci-fi-accent)20 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: sci-fi-loading 1.5s ease-in-out infinite;
+}
+
+@keyframes sci-fi-loading {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --sci-fi-border: #ffffff;
+    --sci-fi-text: #ffffff;
+    --sci-fi-background: #000000;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .sci-fi-scan::after {
+    display: none;
+  }
+}

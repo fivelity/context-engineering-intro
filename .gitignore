@@ -3,3 +3,10 @@ venv_linux
 __pycache__
 .ruff_cache
 .pytest_cache
+
+node_modules/
+.env
+.DS_Store
+
+# Windows Zone.Identifier metadata files
+*:Zone.Identifier

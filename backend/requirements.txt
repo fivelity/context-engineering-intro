@@ -1,0 +1,37 @@
+# FastAPI and server dependencies
+fastapi==0.115.0
+uvicorn[standard]==0.32.0
+websockets==13.1
+python-multipart==0.0.15
+pydantic==2.10.0
+pydantic-settings==2.7.0
+
+# Hardware monitoring
+pythonnet==3.0.4
+psutil==6.1.0
+
+# CORS and middleware
+python-cors==1.7.0
+
+# AI integration
+google-genkit==0.5.0
+
+# Development dependencies
+pytest==8.3.4
+pytest-asyncio==0.25.0
+httpx==0.28.1
+
+# Logging and monitoring
+structlog==24.4.0
+rich==13.9.4
+
+# Environment management
+python-dotenv==1.0.1
+
+# Type checking (dev)
+mypy==1.13.0
+
+# Code formatting (dev)
+black==24.10.0
+isort==5.13.2
+flake8==7.1.1

@@ -1,0 +1,349 @@
+/**
+ * Sci-Fi Themes CSS - Complete theme system with effects
+ * Implements all 5 themes from PRP with visual effects
+ */
+
+/* Base sci-fi styling */
+:root {
+  /* Default theme variables - Cyberpunk */
+  --sci-fi-primary: #00ff88;
+  --sci-fi-secondary: #ff0080;
+  --sci-fi-accent: #00ffff;
+  --sci-fi-background: #0a0a0a;
+  --sci-fi-surface: #1a1a1a;
+  --sci-fi-text: #ffffff;
+  --sci-fi-text-secondary: #cccccc;
+  --sci-fi-border: #333333;
+  --sci-fi-success: #00ff88;
+  --sci-fi-warning: #ffaa00;
+  --sci-fi-danger: #ff0044;
+  --sci-fi-muted: #666666;
+  
+  /* Effect variables */
+  --sci-fi-glow: 1;
+  --sci-fi-animation: 1;
+  --sci-fi-scanlines: 1;
+  --sci-fi-particles: 1;
+  --sci-fi-glitch: 1;
+  --sci-fi-hologram: 0;
+  --sci-fi-pulse: 1;
+  --sci-fi-data-flow: 1;
+  --sci-fi-corner-decoration: 1;
+  --sci-fi-border-radius: 4px;
+  --sci-fi-corner-size: 12px;
+}
+
+/* Theme-specific overrides */
+.sci-fi-theme-cyberpunk {
+  --sci-fi-primary: #00ff88;
+  --sci-fi-secondary: #ff0080;
+  --sci-fi-accent: #00ffff;
+  --sci-fi-background: #0a0a0a;
+  --sci-fi-surface: #1a1a1a;
+  --sci-fi-text: #ffffff;
+  --sci-fi-text-secondary: #cccccc;
+  --sci-fi-border: #333333;
+  --sci-fi-success: #00ff88;
+  --sci-fi-warning: #ffaa00;
+  --sci-fi-danger: #ff0044;
+  --sci-fi-muted: #666666;
+}
+
+.sci-fi-theme-neon {
+  --sci-fi-primary: #0099ff;
+  --sci-fi-secondary: #ff3366;
+  --sci-fi-accent: #ffff00;
+  --sci-fi-background: #000011;
+  --sci-fi-surface: #001122;
+  --sci-fi-text: #ffffff;
+  --sci-fi-text-secondary: #aaccff;
+  --sci-fi-border: #0066cc;
+  --sci-fi-success: #00ff99;
+  --sci-fi-warning: #ffcc00;
+  --sci-fi-danger: #ff3366;
+  --sci-fi-muted: #666699;
+  --sci-fi-border-radius: 8px;
+  --sci-fi-corner-size: 16px;
+}
+
+.sci-fi-theme-gaming {
+  --sci-fi-primary: #ff6600;
+  --sci-fi-secondary: #00ff66;
+  --sci-fi-accent: #6600ff;
+  --sci-fi-background: #0d1117;
+  --sci-fi-surface: #161b22;
+  --sci-fi-text: #f0f6fc;
+  --sci-fi-text-secondary: #8b949e;
+  --sci-fi-border: #30363d;
+  --sci-fi-success: #238636;
+  --sci-fi-warning: #d29922;
+  --sci-fi-danger: #da3633;
+  --sci-fi-muted: #656d76;
+  --sci-fi-border-radius: 6px;
+  --sci-fi-corner-size: 8px;
+}
+
+.sci-fi-theme-corporate {
+  --sci-fi-primary: #2563eb;
+  --sci-fi-secondary: #7c3aed;
+  --sci-fi-accent: #06b6d4;
+  --sci-fi-background: #f8fafc;
+  --sci-fi-surface: #ffffff;
+  --sci-fi-text: #1e293b;
+  --sci-fi-text-secondary: #64748b;
+  --sci-fi-border: #e2e8f0;
+  --sci-fi-success: #059669;
+  --sci-fi-warning: #d97706;
+  --sci-fi-danger: #dc2626;
+  --sci-fi-muted: #94a3b8;
+  --sci-fi-glow: 0;
+  --sci-fi-scanlines: 0;
+  --sci-fi-particles: 0;
+  --sci-fi-glitch: 0;
+  --sci-fi-pulse: 0;
+  --sci-fi-data-flow: 0;
+  --sci-fi-border-radius: 8px;
+  --sci-fi-corner-size: 4px;
+}
+
+.sci-fi-theme-matrix {
+  --sci-fi-primary: #00ff41;
+  --sci-fi-secondary: #008f11;
+  --sci-fi-accent: #41ff00;
+  --sci-fi-background: #000000;
+  --sci-fi-surface: #001100;
+  --sci-fi-text: #00ff41;
+  --sci-fi-text-secondary: #008f11;
+  --sci-fi-border: #003300;
+  --sci-fi-success: #00ff41;
+  --sci-fi-warning: #88ff00;
+  --sci-fi-danger: #ff4411;
+  --sci-fi-muted: #004400;
+  --sci-fi-border-radius: 0px;
+  --sci-fi-corner-size: 0px;
+}
+
+/* Global sci-fi effects */
+body {
+  background-color: var(--sci-fi-background);
+  color: var(--sci-fi-text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Scanlines effect */
+.effects-enabled .scanlines::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(255, 255, 255, 0.03) 2px,
+    rgba(255, 255, 255, 0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 1000;
+  opacity: calc(var(--sci-fi-scanlines) * 0.5);
+}
+
+/* Glow effects */
+.effects-enabled .glow {
+  filter: drop-shadow(0 0 8px var(--sci-fi-primary));
+  transition: filter 0.3s ease;
+}
+
+.effects-enabled .glow:hover {
+  filter: drop-shadow(0 0 12px var(--sci-fi-primary));
+}
+
+/* Pulse animation */
+@keyframes sci-fi-pulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+.animations-enabled .pulse {
+  animation: sci-fi-pulse 2s ease-in-out infinite;
+  animation-play-state: calc(var(--sci-fi-pulse) * running + (1 - var(--sci-fi-pulse)) * paused);
+}
+
+/* Glitch effect */
+@keyframes sci-fi-glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+.animations-enabled .glitch {
+  animation: sci-fi-glitch 0.3s ease-in-out;
+  animation-play-state: calc(var(--sci-fi-glitch) * running + (1 - var(--sci-fi-glitch)) * paused);
+}
+
+/* Data flow animation */
+@keyframes sci-fi-data-flow {
+  0% { transform: translateX(-100%); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateX(100%); opacity: 0; }
+}
+
+.animations-enabled .data-flow::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, var(--sci-fi-accent), transparent);
+  animation: sci-fi-data-flow 3s ease-in-out infinite;
+  animation-play-state: calc(var(--sci-fi-data-flow) * running + (1 - var(--sci-fi-data-flow)) * paused);
+}
+
+/* Hologram effect */
+@keyframes sci-fi-hologram {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+.effects-enabled .hologram {
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 70%
+  );
+  animation: sci-fi-hologram 4s ease-in-out infinite;
+  animation-play-state: calc(var(--sci-fi-hologram) * running + (1 - var(--sci-fi-hologram)) * paused);
+}
+
+/* Corner decorations */
+.effects-enabled .corner-decoration::before,
+.effects-enabled .corner-decoration::after {
+  content: '';
+  position: absolute;
+  width: var(--sci-fi-corner-size);
+  height: var(--sci-fi-corner-size);
+  border: 2px solid var(--sci-fi-accent);
+  opacity: calc(var(--sci-fi-corner-decoration) * 0.6);
+}
+
+.effects-enabled .corner-decoration::before {
+  top: 0;
+  left: 0;
+  border-right: none;
+  border-bottom: none;
+}
+
+.effects-enabled .corner-decoration::after {
+  bottom: 0;
+  right: 0;
+  border-left: none;
+  border-top: none;
+}
+
+/* Particle background */
+.effects-enabled .particles {
+  position: relative;
+  overflow: hidden;
+}
+
+.effects-enabled .particles::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, var(--sci-fi-primary), transparent),
+    radial-gradient(2px 2px at 40px 70px, var(--sci-fi-accent), transparent),
+    radial-gradient(1px 1px at 90px 40px, var(--sci-fi-secondary), transparent),
+    radial-gradient(1px 1px at 130px 80px, var(--sci-fi-primary), transparent);
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  opacity: calc(var(--sci-fi-particles) * 0.3);
+  animation: particle-float 20s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes particle-float {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-10px, -20px); }
+  50% { transform: translate(10px, -10px); }
+  75% { transform: translate(-5px, -30px); }
+  100% { transform: translate(0, 0); }
+}
+
+/* Custom scrollbar */
+.sci-fi-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sci-fi-scrollbar::-webkit-scrollbar-track {
+  background: var(--sci-fi-surface);
+  border-radius: var(--sci-fi-border-radius);
+}
+
+.sci-fi-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--sci-fi-primary);
+  border-radius: var(--sci-fi-border-radius);
+  box-shadow: 0 0 6px var(--sci-fi-primary);
+}
+
+.sci-fi-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--sci-fi-accent);
+  box-shadow: 0 0 8px var(--sci-fi-accent);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .animations-enabled * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --sci-fi-border: #ffffff;
+    --sci-fi-text-secondary: #ffffff;
+  }
+}
+
+/* Focus styles for accessibility */
+.sci-fi-focus:focus-visible {
+  outline: 2px solid var(--sci-fi-primary);
+  outline-offset: 2px;
+  box-shadow: 0 0 8px var(--sci-fi-primary);
+}
+
+/* Utility classes */
+.sci-fi-gradient {
+  background: linear-gradient(135deg, var(--sci-fi-primary), var(--sci-fi-secondary));
+}
+
+.sci-fi-border {
+  border: 1px solid var(--sci-fi-border);
+}
+
+.sci-fi-surface {
+  background-color: var(--sci-fi-surface);
+}
+
+.sci-fi-text-primary {
+  color: var(--sci-fi-primary);
+}
+
+.sci-fi-text-secondary {
+  color: var(--sci-fi-text-secondary);
+}
