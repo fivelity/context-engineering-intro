@@ -9,6 +9,7 @@ pydantic-settings==2.7.0
 # Hardware monitoring
 pythonnet==3.0.4
 psutil==6.1.0
+PyHardwareMonitor==0.1.0
 
 # CORS and middleware
 python-cors==1.7.0
