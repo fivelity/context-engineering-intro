@@ -374,7 +374,7 @@ export function createDashboardId(): string {
   return `dashboard-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 }
 
-export function calculateGridPosition(
+export function calculateDashboardGridPosition(
   position: Position,
   gridSize: number,
   snapToGrid: boolean = true
@@ -387,7 +387,7 @@ export function calculateGridPosition(
   };
 }
 
-export function checkCollision(
+export function checkDashboardCollision(
   widget: WidgetConfig,
   otherWidgets: WidgetConfig[],
   newPosition?: Position,

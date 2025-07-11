@@ -500,3 +500,38 @@ export function getDefaultWidgetConfig(type: WidgetType): Partial<WidgetConfig> 
     maxSize: sizes.max,
   };
 }
+
+// Grid utility functions
+export function checkCollision(
+  widget: { position: Position; size: Size },
+  otherWidgets: WidgetConfig[]
+): boolean {
+  const { position, size } = widget;
+  
+  return otherWidgets.some(other => {
+    const otherRight = other.position.x + other.size.w;
+    const otherBottom = other.position.y + other.size.h;
+    const widgetRight = position.x + size.w;
+    const widgetBottom = position.y + size.h;
+    
+    return !(
+      position.x >= otherRight ||
+      widgetRight <= other.position.x ||
+      position.y >= otherBottom ||
+      widgetBottom <= other.position.y
+    );
+  });
+}
+
+export function calculateGridPosition(
+  position: Position,
+  gridSize: number,
+  snapToGrid: boolean = false
+): Position {
+  if (!snapToGrid) return position;
+  
+  return {
+    x: Math.round(position.x / gridSize) * gridSize,
+    y: Math.round(position.y / gridSize) * gridSize,
+  };
+}

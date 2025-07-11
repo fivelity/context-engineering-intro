@@ -40,7 +40,7 @@ export type KeysOfType<T, U> = {
 }[keyof T];
 
 // Sensor value extraction utility type
-export type ExtractSensorValue<T extends SensorPath> = T extends `${infer Component}.${infer Property}`
+export type ExtractSensorValue<T extends import('./sensor').SensorPath> = T extends `${infer Component}.${infer Property}`
   ? Component extends 'cpu'
     ? Property extends keyof import('./sensor').CpuData
       ? import('./sensor').CpuData[Property]
@@ -53,7 +53,7 @@ export type ExtractSensorValue<T extends SensorPath> = T extends `${infer Compon
   : never;
 
 // Widget configuration utility types
-export type WidgetConfigByType<T extends WidgetType> = 
+export type WidgetConfigByType<T extends import('./widget').WidgetType> = 
   T extends 'gauge' ? import('./widget').GaugeWidgetConfig :
   T extends 'graph' ? import('./widget').GraphWidgetConfig :
   T extends 'simple' ? import('./widget').SimpleWidgetConfig :
@@ -61,7 +61,7 @@ export type WidgetConfigByType<T extends WidgetType> =
   T extends 'multi-resource' ? import('./widget').MultiResourceWidgetConfig :
   never;
 
-export type WidgetConfigUnion = WidgetConfigByType<WidgetType>;
+export type WidgetConfigUnion = WidgetConfigByType<import('./widget').WidgetType>;
 
 // Theme utility types
 export type ThemeColorKey = keyof import('./sci-fi').SciFiColors;
@@ -107,7 +107,7 @@ export type ThemeStoreState = {
 };
 
 // Form validation types
-export type WidgetFormData<T extends WidgetType> = Omit<
+export type WidgetFormData<T extends import('./widget').WidgetType> = Omit<
   WidgetConfigByType<T>, 
   'id' | 'created' | 'modified'
 >;
@@ -118,7 +118,7 @@ export type DashboardFormData = Omit<
 >;
 
 // Component prop types
-export type WidgetComponentProps<T extends WidgetType = WidgetType> = {
+export type WidgetComponentProps<T extends import('./widget').WidgetType = import('./widget').WidgetType> = {
   widget: WidgetConfigByType<T>;
   sensorData: import('./sensor').SensorData;
   isSelected?: boolean;

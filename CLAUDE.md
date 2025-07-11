@@ -27,7 +27,7 @@
 - **TypeScript first**: All components must have proper TypeScript interfaces and strict type safety
 
 #### Backend (FastAPI + PyHardwareMonitor)
-- **Hardware monitoring**: Use PyHardwareMonitor wrapper for LibreHardwareMonitorLib.dll integration
+- **Hardware monitoring**: Use PyHardwareMonitor wrapper for LibreHardwareMonitorLib.dll integration. package name: 'HardwareMonitor==1.0.0' (@requirements.txt)
 - **Admin privileges**: Handle cases where admin rights are required for detailed sensor access
 - **WebSocket streaming**: Implement real-time sensor data streaming optimized for React 19's concurrent features
 - **Cross-platform fallback**: Use psutil when LibreHardwareMonitor is unavailable (non-Windows)
@@ -42,7 +42,7 @@
 - **Performance monitoring**: Ensure smooth operation with multiple concurrent widgets
 
 #### AI Integration (Google Genkit)
-- **Context-aware prompts**: Generate intelligent suggestions based on React state and dashboard context
+- **Context-aware prompts**: Generate intelligent suggestions based on React state and dashboard/widget context
 - **Error handling**: Fallback gracefully when AI services are unavailable
 - **Privacy**: Never send sensitive system information to AI models
 - **React integration**: AI features should seamlessly integrate with React state management
