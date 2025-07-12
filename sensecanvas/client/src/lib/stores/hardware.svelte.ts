@@ -56,16 +56,21 @@ let sortedAlerts = $derived(() =>
 // Temperature monitoring
 let highestTemperature = $derived(() => {
   const temps = [];
-  if (cpuMetrics) temps.push(cpuMetrics.temperature);
-  if (gpuMetrics) temps.push(gpuMetrics.temperature);
-  if (systemMetrics) temps.push(systemMetrics.temperature);
+  const cpu = cpuMetrics();
+  const gpu = gpuMetrics();
+  const system = systemMetrics();
+  if (cpu) temps.push(cpu.temperature);
+  if (gpu) temps.push(gpu.temperature);
+  if (system) temps.push(system.temperature);
   return temps.length > 0 ? Math.max(...temps.filter(t => t > 0)) : 0;
 });
 
 // Usage monitoring  
 let systemLoad = $derived(() => {
-  if (!cpuMetrics || !memoryMetrics) return 0;
-  return Math.max(cpuMetrics.usage, memoryMetrics.usage);
+  const cpu = cpuMetrics();
+  const memory = memoryMetrics();
+  if (!cpu || !memory) return 0;
+  return Math.max(cpu.usage, memory.usage);
 });
 
 /**
@@ -83,6 +88,7 @@ export const hardwareStore = {
   
   // Derived getters
   get isConnected() { return isConnected(); },
+  get hasData() { return hasRecentData(); },
   get hasRecentData() { return hasRecentData(); },
   get connectionHealth() { return connectionHealth(); },
   get cpu() { return cpuMetrics(); },

@@ -6,7 +6,7 @@ Displays alert notifications with auto-dismiss and actions
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
   
-  export interface Notification {
+  interface Notification {
     id: string;
     type: 'info' | 'success' | 'warning' | 'error';
     title: string;
@@ -63,7 +63,7 @@ Displays alert notifications with auto-dismiss and actions
   };
 
   // ✅ Derived visible notifications
-  let visibleNotifications = $derived(() => 
+  let visibleNotifications = $derived(
     notifications.slice(0, maxNotifications)
   );
 
@@ -167,7 +167,7 @@ Displays alert notifications with auto-dismiss and actions
               <button
                 type="button"
                 class="notification-action"
-                on:click={() => handleAction(notification, index)}
+                onclick={() => handleAction(notification, index)}
               >
                 {action.label}
               </button>
@@ -179,7 +179,7 @@ Displays alert notifications with auto-dismiss and actions
       <button
         type="button"
         class="notification-close"
-        on:click={() => dismissNotification(notification.id)}
+        onclick={() => dismissNotification(notification.id)}
         aria-label="Dismiss notification"
       >
         <svg

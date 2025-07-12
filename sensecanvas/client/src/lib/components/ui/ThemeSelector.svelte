@@ -91,12 +91,12 @@ Theme switching UI with previews and auto-switch options
   <button
     type="button"
     class="theme-button"
-    on:click|stopPropagation={() => (isOpen = !isOpen)}
+    onclick={(e) => { e.stopPropagation(); isOpen = !isOpen; }}
     aria-label="Select theme"
     aria-expanded={isOpen}
   >
     <div class="theme-preview">
-      {#each themePreviews[themeStore.currentTheme.id]?.colors || [] as color, i}
+      {#each themePreviews[themeStore.currentTheme.id as keyof typeof themePreviews]?.colors || [] as color, i}
         <div 
           class="preview-dot"
           style="background-color: {color}; animation-delay: {i * 0.1}s"
@@ -134,9 +134,9 @@ Theme switching UI with previews and auto-switch options
             type="button"
             class="theme-option"
             class:active={theme.id === themeStore.currentTheme.id}
-            on:click={() => selectTheme(theme.id)}
-            on:mouseenter={() => (hoveredTheme = theme.id)}
-            on:mouseleave={() => (hoveredTheme = null)}
+            onclick={() => selectTheme(theme.id)}
+            onmouseenter={() => (hoveredTheme = theme.id)}
+            onmouseleave={() => (hoveredTheme = null)}
           >
             <div class="option-content">
               <div class="option-header">
@@ -162,7 +162,7 @@ Theme switching UI with previews and auto-switch options
               
               {#if showPreview}
                 <div class="option-preview">
-                  {#each themePreviews[theme.id]?.colors || [] as color}
+                  {#each themePreviews[theme.id as keyof typeof themePreviews]?.colors || [] as color}
                     <div 
                       class="preview-bar"
                       style="background-color: {color}"
@@ -172,7 +172,7 @@ Theme switching UI with previews and auto-switch options
               {/if}
               
               <p class="option-description">
-                {themePreviews[theme.id]?.description || theme.description}
+                {themePreviews[theme.id as keyof typeof themePreviews]?.description || theme.description}
               </p>
             </div>
           </button>
@@ -186,7 +186,7 @@ Theme switching UI with previews and auto-switch options
               type="checkbox"
               class="auto-switch-checkbox"
               checked={themeStore.autoSwitch}
-              on:change={toggleAutoSwitch}
+              onchange={toggleAutoSwitch}
             />
             <span class="auto-switch-text">
               Auto-switch by time of day

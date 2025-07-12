@@ -347,11 +347,19 @@ export const dashboardStore = {
   },
 
   // Dashboard management
-  loadDashboard(layout: DashboardLayout) {
-    widgets = layout.widgets;
-    gridConfig = layout.gridConfig;
-    dashboardConfig = layout;
-    selectedWidgetId = null;
+  async loadDashboard() {
+    try {
+      const stored = localStorage.getItem('sensecanvas-dashboard');
+      if (stored) {
+        const layout: DashboardLayout = JSON.parse(stored);
+        widgets = layout.widgets;
+        gridConfig = layout.gridConfig;
+        dashboardConfig = layout;
+        selectedWidgetId = null;
+      }
+    } catch (error) {
+      console.warn('Failed to load dashboard from storage:', error);
+    }
   },
 
   exportDashboard(): DashboardLayout {

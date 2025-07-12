@@ -94,9 +94,9 @@ Full dashboard implementation with real-time hardware monitoring
     );
     
     recentAlerts.forEach(alert => {
-      notificationCenter.addNotification({
+      notificationCenter?.addNotification({
         type: alert.severity === 'critical' ? 'error' : 'warning',
-        title: `${alert.sensorName} Alert`,
+        title: `${alert.sensorName || alert.sensor} Alert`,
         message: alert.message,
         duration: alert.severity === 'critical' ? 0 : 5000
       });
@@ -128,7 +128,7 @@ Full dashboard implementation with real-time hardware monitoring
   // Update page title
   $effect(() => {
     if (typeof document !== 'undefined') {
-      document.title = pageTitle;
+      document.title = pageTitle();
     }
   });
 </script>
@@ -167,7 +167,7 @@ Full dashboard implementation with real-time hardware monitoring
         <p class="error-message">{error}</p>
         <button 
           class="retry-button"
-          on:click={initialize}
+          onclick={initialize}
         >
           Retry Initialization
         </button>

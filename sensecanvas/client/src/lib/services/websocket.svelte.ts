@@ -324,5 +324,15 @@ export const websocketStore = {
   get attempts() { return reconnectAttempts; },
   get canReconnect() { return canReconnect(); },
   get subscriptions() { return subscriptions; },
-  get service() { return websocketService; }
+  get service() { return websocketService; },
+  
+  // Public methods
+  async initialize() {
+    // The service auto-initializes in the constructor
+    return Promise.resolve();
+  },
+  
+  reconnect() {
+    websocketService.reconnect();
+  }
 };

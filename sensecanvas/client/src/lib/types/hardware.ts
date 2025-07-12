@@ -91,6 +91,7 @@ export interface HardwareAlert {
   threshold: number | string;
   timestamp: number;
   sensor: string;
+  sensorName?: string;
 }
 
 // Hardware monitoring status
@@ -120,6 +121,9 @@ export interface HardwareConfig {
   enableAlerts: boolean;
   enableNotifications: boolean;
 }
+
+// Connection state types
+export type ConnectionState = 'disconnected' | 'connecting' | 'connected' | 'error';
 
 // Hardware monitoring events
 export type HardwareEventType = 
@@ -208,30 +212,4 @@ export interface HardwareSpecs {
   }>;
 }
 
-// Export all types for use in components
-export type {
-  CoreMetric,
-  CpuMetrics,
-  GpuMemory,
-  GpuFrequency,
-  GpuMetrics,
-  MemoryMetrics,
-  StorageMetrics,
-  NetworkMetrics,
-  SystemMetrics,
-  HardwareMetrics,
-  HardwareAlert,
-  HardwareStatus,
-  SensorType,
-  HardwareConfig,
-  HardwareEvent,
-  HardwareEventType,
-  MetricValue,
-  TemperatureUnit,
-  SpeedUnit,
-  DataUnit,
-  MetricsFilter,
-  BenchmarkData,
-  TrendData,
-  HardwareSpecs
-};
+// All types are already exported above

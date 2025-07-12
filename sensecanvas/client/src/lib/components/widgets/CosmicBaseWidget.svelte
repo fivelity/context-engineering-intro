@@ -54,10 +54,10 @@ Base widget using Cosmic UI Frame component with SVG shapes
 
   // Get frame variant based on theme
   let frameVariant = $derived(
-    themeStore.currentTheme === 'cyberpunk' ? 'cyberpunk' :
-    themeStore.currentTheme === 'gaming' ? 'hexagon' :
-    themeStore.currentTheme === 'minimal' ? 'sharp' :
-    themeStore.currentTheme === 'rgb' ? 'octagon' :
+    themeStore.currentTheme.id === 'cyberpunk' ? 'cyberpunk' :
+    themeStore.currentTheme.id === 'gaming' ? 'hexagon' :
+    themeStore.currentTheme.id === 'minimal' ? 'sharp' :
+    themeStore.currentTheme.id === 'rgb' ? 'octagon' :
     'default'
   );
 
@@ -139,7 +139,8 @@ Base widget using Cosmic UI Frame component with SVG shapes
     if ('Notification' in window && Notification.permission === 'granted') {
       new Notification(`${config.title} Alert`, {
         body: `${config.sensorType.toUpperCase()} at ${widgetValue().toFixed(1)}%`,
-        icon: '/icons/alert.svg'
+        icon: '/icons/alert.svg',
+        tag: `alert-${config.id}`
       });
     }
   }

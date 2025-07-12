@@ -282,6 +282,11 @@ class ThemeStore {
     }
   }
 
+  initialize() {
+    // Theme is already initialized in constructor
+    // This method is for compatibility with components
+  }
+
   // ✅ Derived theme data
   get currentTheme(): ThemeDefinition {
     return themes[this._currentTheme] || themes.default;
@@ -292,6 +297,10 @@ class ThemeStore {
   }
 
   get availableThemes(): ThemeDefinition[] {
+    return Object.values(themes);
+  }
+
+  getThemeList(): ThemeDefinition[] {
     return Object.values(themes);
   }
 
