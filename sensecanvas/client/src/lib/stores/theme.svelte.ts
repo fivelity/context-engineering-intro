@@ -442,11 +442,11 @@ class ThemeStore {
 
   // Theme utilities
   getColorValue(colorKey: string): string {
-    return this.currentTheme.colors[colorKey] || '#000000';
+    return (this.currentTheme.colors as any)[colorKey] || '#000000';
   }
 
   getGradientValue(gradientKey: string): string {
-    return this.currentTheme.gradients[gradientKey] || '';
+    return (this.currentTheme.gradients as any)[gradientKey] || '';
   }
 
   isLight(): boolean {

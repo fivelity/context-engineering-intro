@@ -13,9 +13,10 @@
     "target": "ES2022",
     "module": "ESNext",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "types": ["vite/client", "@testing-library/jest-dom"],
+    "types": ["vite/client"],
     "baseUrl": ".",
     "paths": {
+      "@/*": ["./src/*"],
       "$lib": ["./src/lib"],
       "$lib/*": ["./src/lib/*"],
       "$app/*": ["./.svelte-kit/runtime/app/*"]

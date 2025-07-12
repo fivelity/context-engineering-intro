@@ -341,34 +341,3 @@ export type DashboardMode = 'view' | 'edit' | 'presentation' | 'fullscreen';
 export type LayoutOrientation = 'portrait' | 'landscape';
 export type ZoomLevel = number; // 0.5 to 2.0
 
-// Export all types
-export type {
-  DashboardState,
-  WidgetInteractionState,
-  ResizeHandle,
-  GridCell,
-  GridConfiguration,
-  DashboardAction,
-  DashboardEvent,
-  WidgetBounds,
-  CollisionInfo,
-  ToolbarState,
-  ToolbarTool,
-  ContextMenuState,
-  ContextMenuItem,
-  KeyboardShortcut,
-  DashboardPerformance,
-  PerformanceError,
-  DashboardSettings,
-  DashboardBackup,
-  DashboardAnalytics,
-  CustomTheme,
-  ResponsiveBreakpoint,
-  ResponsiveLayout,
-  AccessibilitySettings,
-  ConnectionStatus,
-  ConnectionError,
-  DashboardMode,
-  LayoutOrientation,
-  ZoomLevel
-};

@@ -156,7 +156,7 @@ Customizable text display widget with formatting options and icon support.
     <!-- Main text display -->
     <div 
       class="text-content"
-      style={textStyles}
+      style={textStyles()}
     >
       {getAdvancedDisplayText()}
     </div>

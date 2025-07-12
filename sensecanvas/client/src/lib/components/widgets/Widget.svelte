@@ -226,11 +226,11 @@ Dynamic widget renderer that selects the appropriate widget type based on config
     let:alertColor
   >
     <svelte:component 
-      this={WidgetComponent}
+      this={WidgetComponent()}
       {config}
-      {widgetValue}
-      {alertLevel}
-      {alertColor}
+      widgetValue={widgetValue()}
+      alertLevel={alertLevel()}
+      alertColor={alertColor()}
       {isEditMode}
       {isSelected}
     />

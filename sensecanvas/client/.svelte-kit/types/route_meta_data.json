@@ -1,0 +1,18 @@
+{
+	"/": [],
+	"/api/ai/generate-layout": [
+		"src/routes/api/ai/generate-layout/+server.ts"
+	],
+	"/api/ai/generate-widget": [
+		"src/routes/api/ai/generate-widget/+server.ts"
+	],
+	"/api/config/export": [
+		"src/routes/api/config/export/+server.ts"
+	],
+	"/api/config/import": [
+		"src/routes/api/config/import/+server.ts"
+	],
+	"/api/config/validate": [
+		"src/routes/api/config/validate/+server.ts"
+	]
+}

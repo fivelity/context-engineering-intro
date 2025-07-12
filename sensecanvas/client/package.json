@@ -14,13 +14,16 @@
     "format": "prettier --write ."
   },
   "devDependencies": {
-    "@sveltejs/adapter-auto": "^3.2.5",
+    "@sveltejs/adapter-auto": "^3.3.1",
     "@sveltejs/kit": "^2.6.1",
     "@sveltejs/vite-plugin-svelte": "^4.0.0",
-
+    "@tailwindcss/vite": "^4.0.0",
+    "@testing-library/svelte": "^5.2.1",
     "@types/eslint": "^8.56.10",
+    "@types/node": "^24.0.13",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
+    "@zag-js/svelte": "^1.18.3",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.9.1",
     "eslint-config-prettier": "^9.1.0",
@@ -31,16 +34,22 @@
     "svelte-check": "^3.8.6",
     "tslib": "^2.7.0",
     "typescript": "^5.5.4",
-    "vite": "^5.4.7",
-    "vitest": "^2.1.1",
-    "@testing-library/svelte": "^5.2.1"
+    "vite": "^7.0.4",
+    "vitest": "^2.1.1"
   },
   "dependencies": {
     "@neodrag/svelte": "^2.0.6",
-    "layerchart": "^0.24.0",
-    "zod": "^3.23.8",
+    "@tailwindcss/postcss": "^4.0.0",
     "@tailwindcss/typography": "^0.5.15",
-    "tailwindcss": "^3.4.15",
-    "postcss": "^8.4.47"
+    "@zag-js/accordion": "^1.18.3",
+    "@zag-js/dialog": "^1.18.3",
+    "@zag-js/radio-group": "^1.18.3",
+    "@zag-js/switch": "^1.18.3",
+    "@zag-js/tabs": "^1.18.3",
+    "chart.js": "^4.5.0",
+    "layerchart": "^0.24.0",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^4.0.0",
+    "zod": "^3.23.8"
   }
 }

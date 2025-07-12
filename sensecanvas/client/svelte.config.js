@@ -22,18 +22,9 @@ const config = {
       $utils: 'src/lib/utils'
     },
     
-    files: {
-      app: 'src/app.html',
-      lib: 'src/lib',
-      routes: 'src/routes',
-      static: 'static',
-      appTemplate: 'src/app.html'
-    },
+
     
-    // Enable Svelte 5 compatibility
-    version: {
-      name: '5.0.0'
-    }
+
   },
   
   // Svelte 5 compiler options

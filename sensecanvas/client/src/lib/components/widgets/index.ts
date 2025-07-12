@@ -107,16 +107,16 @@ export function createWidget(type: string, overrides: Partial<any> = {}) {
   // Add type-specific configuration
   switch (type) {
     case 'gauge':
-      baseConfig.gaugeConfig = { ...DEFAULT_WIDGET_CONFIGS.gauge, ...overrides.gaugeConfig };
+      (baseConfig as any).gaugeConfig = { ...DEFAULT_WIDGET_CONFIGS.gauge, ...overrides.gaugeConfig };
       break;
     case 'graph':
-      baseConfig.graphConfig = { ...DEFAULT_WIDGET_CONFIGS.graph, ...overrides.graphConfig };
+      (baseConfig as any).graphConfig = { ...DEFAULT_WIDGET_CONFIGS.graph, ...overrides.graphConfig };
       break;
     case 'text':
-      baseConfig.textConfig = { ...DEFAULT_WIDGET_CONFIGS.text, ...overrides.textConfig };
+      (baseConfig as any).textConfig = { ...DEFAULT_WIDGET_CONFIGS.text, ...overrides.textConfig };
       break;
     case 'multi-sensor':
-      baseConfig.multiSensorConfig = { ...DEFAULT_WIDGET_CONFIGS.multiSensor, ...overrides.multiSensorConfig };
+      (baseConfig as any).multiSensorConfig = { ...DEFAULT_WIDGET_CONFIGS.multiSensor, ...overrides.multiSensorConfig };
       break;
   }
 
@@ -174,5 +174,6 @@ export const WIDGET_COLOR_SCHEMES = {
 } as const;
 
 export function getColorScheme(theme: string): string[] {
-  return WIDGET_COLOR_SCHEMES[theme as keyof typeof WIDGET_COLOR_SCHEMES] || WIDGET_COLOR_SCHEMES.default;
+  const scheme = WIDGET_COLOR_SCHEMES[theme as keyof typeof WIDGET_COLOR_SCHEMES] || WIDGET_COLOR_SCHEMES.default;
+  return [...scheme]; // Create a mutable copy
 }

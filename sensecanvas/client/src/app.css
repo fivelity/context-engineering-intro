@@ -1,6 +1,96 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import "tailwindcss";
+
+/* TailwindCSS v4.0 Theme Configuration */
+@theme {
+  /* Custom spacing scale */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: 4rem;
+  
+  /* Custom color palette */
+  --color-cyber-blue: #00ffff;
+  --color-cyber-green: #00ff88;
+  --color-cyber-purple: #9d4edd;
+  --color-cyber-pink: #ff006e;
+  --color-cyber-orange: #ff6b35;
+  --color-neon-red: #ff073a;
+  --color-dark-bg: #0a0a0a;
+  --color-dark-surface: #1a1a1a;
+  --color-dark-accent: #2a2a2a;
+  
+  /* Custom font families */
+  --font-family-cyber: Orbitron, monospace;
+  --font-family-mono: "JetBrains Mono", monospace;
+  
+  /* Custom animations */
+  --animate-pulse-glow: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-slide-up: slide-up 0.3s ease-out;
+  --animate-slide-down: slide-down 0.3s ease-out;
+  --animate-fade-in: fade-in 0.2s ease-out;
+  --animate-neon-pulse: neon-pulse 2s ease-in-out infinite alternate;
+  
+  /* Custom box shadows */
+  --shadow-neon: 0 0 20px color-mix(in srgb, var(--color-cyber-blue) 50%, transparent);
+  --shadow-neon-green: 0 0 20px color-mix(in srgb, var(--color-cyber-green) 50%, transparent);
+  --shadow-neon-purple: 0 0 20px color-mix(in srgb, var(--color-cyber-purple) 50%, transparent);
+  --shadow-cyber: 0 4px 20px color-mix(in srgb, var(--color-cyber-blue) 30%, transparent);
+}
+
+/* Custom keyframes for animations */
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-down {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes neon-pulse {
+  from {
+    text-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 15px currentColor;
+  }
+  to {
+    text-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
+  }
+}
 
 /* Import Orbitron font for cyberpunk aesthetics */
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
