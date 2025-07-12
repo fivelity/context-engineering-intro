@@ -1,294 +1,213 @@
 <!--
 SenseCanvas Theme Selector Component
-Interactive theme switcher with preview and auto-switching functionality.
+Theme switching UI with previews and auto-switch options
 -->
 
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
-  import { themeStore, type ThemeDefinition } from '../../stores/theme.svelte.js';
-
+  import { themeStore } from '../../stores/theme.svelte.js';
+  
   interface Props {
-    className?: string;
+    showAutoSwitch?: boolean;
     showPreview?: boolean;
-    compactMode?: boolean;
+    compact?: boolean;
+    class?: string;
   }
 
-  let { className = '', showPreview = true, compactMode = false }: Props = $props();
+  let {
+    showAutoSwitch = true,
+    showPreview = true,
+    compact = false,
+    class: customClass = ''
+  }: Props = $props();
 
   const dispatch = createEventDispatcher<{
-    themeChanged: { themeId: string; theme: ThemeDefinition };
+    themeChanged: string;
+    autoSwitchToggled: boolean;
   }>();
 
-  // ✅ Using Svelte 5 runes for theme selector state
+  // ✅ Using Svelte 5 runes for theme state
   let isOpen = $state(false);
-  let previewTheme = $state<string | null>(null);
-  let showExportModal = $state(false);
-  let exportedConfig = $state('');
+  let hoveredTheme = $state<string | null>(null);
 
-  // ✅ Derived theme data
-  let currentTheme = $derived(() => themeStore.currentTheme);
-  let availableThemes = $derived(() => themeStore.availableThemes);
-  let themesByCategory = $derived(() => themeStore.themesByCategory);
-  let autoSwitch = $derived(() => themeStore.autoSwitch);
-
-  let selectorClasses = $derived(() => {
-    const classes = ['theme-selector', className];
-    if (isOpen) classes.push('open');
-    if (compactMode) classes.push('compact');
-    return classes.join(' ');
-  });
+  // Theme previews
+  const themePreviews = {
+    default: {
+      colors: ['#22d3ee', '#06b6d4', '#0891b2'],
+      description: 'Clean cyan and blue tech aesthetic'
+    },
+    cyberpunk: {
+      colors: ['#a855f7', '#ec4899', '#f59e0b'],
+      description: 'Purple and pink neon vibes'
+    },
+    gaming: {
+      colors: ['#22c55e', '#eab308', '#ef4444'],
+      description: 'RGB gaming setup inspired'
+    },
+    minimal: {
+      colors: ['#64748b', '#475569', '#334155'],
+      description: 'Clean and distraction-free'
+    },
+    rgb: {
+      colors: ['#f59e0b', '#ef4444', '#a855f7', '#22c55e'],
+      description: 'Full spectrum rainbow effects'
+    }
+  };
 
   // Handle theme selection
   function selectTheme(themeId: string) {
     themeStore.setTheme(themeId);
+    dispatch('themeChanged', themeId);
     isOpen = false;
-    previewTheme = null;
-    
-    dispatch('themeChanged', {
-      themeId,
-      theme: themeStore.currentTheme
-    });
   }
 
-  // Handle theme preview
-  function previewThemeHandler(themeId: string) {
-    if (!showPreview) return;
-    
-    previewTheme = themeId;
-    // Apply preview temporarily
-    themeStore.setTheme(themeId);
-  }
-
-  function stopPreview() {
-    if (previewTheme) {
-      themeStore.setTheme(themeStore.currentThemeId);
-      previewTheme = null;
-    }
-  }
-
-  // Handle auto-switching
+  // Toggle auto-switch
   function toggleAutoSwitch() {
-    themeStore.setAutoSwitch(!autoSwitch);
+    const newValue = !themeStore.autoSwitch;
+    themeStore.setAutoSwitch(newValue);
+    dispatch('autoSwitchToggled', newValue);
   }
 
-  // Export/Import functionality
-  function exportTheme() {
-    exportedConfig = themeStore.exportTheme();
-    showExportModal = true;
-  }
-
-  function importTheme() {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = '.json';
-    
-    input.onchange = (e) => {
-      const file = (e.target as HTMLInputElement).files?.[0];
-      if (!file) return;
-      
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        try {
-          const configJson = e.target?.result as string;
-          const success = themeStore.importTheme(configJson);
-          if (success) {
-            alert('Theme imported successfully!');
-          } else {
-            alert('Invalid theme configuration file.');
-          }
-        } catch (error) {
-          alert('Failed to import theme configuration.');
-        }
-      };
-      reader.readAsText(file);
-    };
-    
-    input.click();
-  }
-
-  // Copy exported config to clipboard
-  async function copyToClipboard() {
-    try {
-      await navigator.clipboard.writeText(exportedConfig);
-      alert('Theme configuration copied to clipboard!');
-    } catch (error) {
-      console.error('Failed to copy to clipboard:', error);
-    }
-  }
-
-  // Close selector when clicking outside
-  function handleClickOutside(event: MouseEvent) {
-    const target = event.target as Element;
-    if (!target.closest('.theme-selector')) {
+  // Handle outside click
+  function handleOutsideClick(event: MouseEvent) {
+    if (isOpen && !(event.target as Element).closest('.theme-selector')) {
       isOpen = false;
-      stopPreview();
     }
   }
 
-  // ✅ Using $effect for click outside handler
+  // ✅ Using $effect for document click listener
   $effect(() => {
     if (isOpen) {
-      document.addEventListener('click', handleClickOutside);
-      return () => document.removeEventListener('click', handleClickOutside);
+      document.addEventListener('click', handleOutsideClick);
+      
+      return () => {
+        document.removeEventListener('click', handleOutsideClick);
+      };
     }
   });
-
-  // Get theme preview colors
-  function getThemeColors(theme: ThemeDefinition): string[] {
-    return [theme.colors.primary, theme.colors.secondary, theme.colors.accent];
-  }
-
-  // Get category icon
-  function getCategoryIcon(category: string): string {
-    const icons = {
-      'sci-fi': '🚀',
-      'gaming': '🎮',
-      'professional': '💼',
-      'colorful': '🌈'
-    };
-    return icons[category] || '🎨';
-  }
 </script>
 
-<div class={selectorClasses}>
-  <!-- Theme Selector Button -->
-  <button 
+<div class="theme-selector {customClass}" class:compact>
+  <button
+    type="button"
     class="theme-button"
-    onclick={() => isOpen = !isOpen}
-    title="Change Theme"
-    aria-label="Theme selector"
+    on:click|stopPropagation={() => (isOpen = !isOpen)}
+    aria-label="Select theme"
+    aria-expanded={isOpen}
   >
     <div class="theme-preview">
-      {#each getThemeColors(currentTheme) as color}
-        <div class="color-dot" style="background-color: {color}"></div>
+      {#each themePreviews[themeStore.currentTheme.id]?.colors || [] as color, i}
+        <div 
+          class="preview-dot"
+          style="background-color: {color}; animation-delay: {i * 0.1}s"
+        />
       {/each}
     </div>
     
-    {#if !compactMode}
-      <span class="theme-name">{currentTheme.name}</span>
+    {#if !compact}
+      <span class="theme-name">{themeStore.currentTheme.name}</span>
     {/if}
     
-    <span class="dropdown-arrow" class:rotated={isOpen}>▼</span>
+    <svg
+      class="dropdown-icon"
+      class:rotate-180={isOpen}
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M19 9l-7 7-7-7"
+      />
+    </svg>
   </button>
 
-  <!-- Theme Dropdown -->
   {#if isOpen}
     <div class="theme-dropdown">
-      <div class="dropdown-header">
-        <h3 class="dropdown-title">Select Theme</h3>
-        
-        <div class="header-actions">
-          <button 
-            class="action-btn"
-            onclick={toggleAutoSwitch}
-            class:active={autoSwitch}
-            title={autoSwitch ? 'Disable auto-switching' : 'Enable auto-switching'}
+      <div class="theme-list">
+        {#each themeStore.getThemeList() as theme}
+          <button
+            type="button"
+            class="theme-option"
+            class:active={theme.id === themeStore.currentTheme.id}
+            on:click={() => selectTheme(theme.id)}
+            on:mouseenter={() => (hoveredTheme = theme.id)}
+            on:mouseleave={() => (hoveredTheme = null)}
           >
-            🔄
-          </button>
-          
-          <button 
-            class="action-btn"
-            onclick={exportTheme}
-            title="Export theme configuration"
-          >
-            💾
-          </button>
-          
-          <button 
-            class="action-btn"
-            onclick={importTheme}
-            title="Import theme configuration"
-          >
-            📁
-          </button>
-        </div>
-      </div>
-
-      <div class="themes-container">
-        {#each Object.entries(themesByCategory) as [category, themes]}
-          <div class="theme-category">
-            <h4 class="category-title">
-              <span class="category-icon">{getCategoryIcon(category)}</span>
-              {category.charAt(0).toUpperCase() + category.slice(1)}
-            </h4>
-            
-            <div class="themes-grid">
-              {#each themes as theme}
-                <button
-                  class="theme-option"
-                  class:active={theme.id === currentTheme.id}
-                  class:previewing={previewTheme === theme.id}
-                  onclick={() => selectTheme(theme.id)}
-                  onmouseenter={() => previewThemeHandler(theme.id)}
-                  onmouseleave={stopPreview}
-                  title={theme.description}
-                >
-                  <div class="theme-colors">
-                    {#each getThemeColors(theme) as color}
-                      <div class="color-swatch" style="background-color: {color}"></div>
-                    {/each}
-                  </div>
-                  
-                  <div class="theme-info">
-                    <span class="theme-title">{theme.name}</span>
-                    <span class="theme-desc">{theme.description}</span>
-                  </div>
-                  
-                  {#if theme.id === currentTheme.id}
-                    <div class="active-indicator">✓</div>
-                  {/if}
-                </button>
-              {/each}
+            <div class="option-content">
+              <div class="option-header">
+                <span class="option-name">{theme.name}</span>
+                {#if theme.id === themeStore.currentTheme.id}
+                  <svg
+                    class="check-icon"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                {/if}
+              </div>
+              
+              {#if showPreview}
+                <div class="option-preview">
+                  {#each themePreviews[theme.id]?.colors || [] as color}
+                    <div 
+                      class="preview-bar"
+                      style="background-color: {color}"
+                    />
+                  {/each}
+                </div>
+              {/if}
+              
+              <p class="option-description">
+                {themePreviews[theme.id]?.description || theme.description}
+              </p>
             </div>
-          </div>
+          </button>
         {/each}
       </div>
 
-      {#if autoSwitch}
-        <div class="auto-switch-info">
-          <span class="info-icon">🔄</span>
-          <span class="info-text">Auto-switching enabled (10s intervals)</span>
+      {#if showAutoSwitch}
+        <div class="auto-switch-section">
+          <label class="auto-switch-label">
+            <input
+              type="checkbox"
+              class="auto-switch-checkbox"
+              checked={themeStore.autoSwitch}
+              on:change={toggleAutoSwitch}
+            />
+            <span class="auto-switch-text">
+              Auto-switch by time of day
+            </span>
+          </label>
+          {#if themeStore.autoSwitch}
+            <p class="auto-switch-info">
+              Themes will change automatically:
+              <br />
+              • Default (9 AM - 6 PM)
+              <br />
+              • Gaming (6 PM - 8 PM)
+              <br />
+              • Cyberpunk (8 PM - 9 AM)
+            </p>
+          {/if}
         </div>
       {/if}
     </div>
   {/if}
 </div>
-
-<!-- Export Modal -->
-{#if showExportModal}
-  <div class="modal-backdrop" onclick={() => showExportModal = false}>
-    <div class="export-modal" onclick={(e) => e.stopPropagation()}>
-      <div class="modal-header">
-        <h3>Export Theme Configuration</h3>
-        <button onclick={() => showExportModal = false} class="close-btn">×</button>
-      </div>
-      
-      <div class="modal-body">
-        <p class="export-description">
-          Copy this configuration to share your theme settings:
-        </p>
-        
-        <div class="config-container">
-          <textarea
-            class="config-textarea"
-            readonly
-            bind:value={exportedConfig}
-          ></textarea>
-        </div>
-        
-        <div class="modal-actions">
-          <button class="btn btn-primary" onclick={copyToClipboard}>
-            📋 Copy to Clipboard
-          </button>
-          <button class="btn btn-secondary" onclick={() => showExportModal = false}>
-            Close
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-{/if}
 
 <style>
   .theme-selector {
@@ -296,206 +215,146 @@ Interactive theme switcher with preview and auto-switching functionality.
   }
 
   .theme-button {
-    @apply flex items-center gap-2 px-3 py-2 rounded-lg;
-    @apply bg-gray-800 border border-gray-600 text-gray-300;
-    @apply hover:bg-gray-700 hover:border-cyan-400/50 transition-colors;
-    @apply cursor-pointer;
+    @apply flex items-center gap-2 px-3 py-2;
+    @apply rounded-lg border border-border;
+    @apply bg-surface hover:bg-surface/80;
+    @apply text-text transition-all;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary;
   }
 
   .theme-selector.compact .theme-button {
-    @apply px-2 py-2;
+    @apply px-2 py-1;
   }
 
   .theme-preview {
     @apply flex gap-1;
   }
 
-  .color-dot {
-    @apply w-3 h-3 rounded-full border border-gray-600;
+  .preview-dot {
+    @apply w-4 h-4 rounded-full;
+    @apply animate-pulse;
+  }
+
+  .theme-selector.compact .preview-dot {
+    @apply w-3 h-3;
   }
 
   .theme-name {
     @apply text-sm font-medium;
   }
 
-  .dropdown-arrow {
-    @apply text-xs transition-transform duration-200;
+  .dropdown-icon {
+    @apply transition-transform duration-200;
   }
 
-  .dropdown-arrow.rotated {
-    @apply rotate-180;
+  .rotate-180 {
+    @apply transform rotate-180;
   }
 
   .theme-dropdown {
-    @apply absolute top-full mt-2 right-0 z-50;
-    @apply bg-gray-900 border border-cyan-400/30 rounded-lg shadow-xl;
-    @apply min-w-80 max-w-lg max-h-96 overflow-y-auto;
-    animation: dropdown-in 0.2s ease-out;
+    @apply absolute top-full mt-2 right-0;
+    @apply w-72 rounded-lg;
+    @apply bg-background border border-border;
+    @apply shadow-2xl;
+    @apply animate-in fade-in slide-in-from-top-2 duration-200;
+    @apply z-50;
   }
 
-  @keyframes dropdown-in {
-    from {
-      opacity: 0;
-      transform: translateY(-10px) scale(0.95);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-  }
-
-  .dropdown-header {
-    @apply flex items-center justify-between p-4 border-b border-gray-700;
-  }
-
-  .dropdown-title {
-    @apply text-lg font-bold text-cyan-400;
-  }
-
-  .header-actions {
-    @apply flex gap-2;
-  }
-
-  .action-btn {
-    @apply w-8 h-8 flex items-center justify-center rounded;
-    @apply bg-gray-800 border border-gray-600 text-gray-300;
-    @apply hover:bg-gray-700 hover:border-cyan-400/50 transition-colors;
-  }
-
-  .action-btn.active {
-    @apply bg-cyan-500/20 border-cyan-400 text-cyan-400;
-  }
-
-  .themes-container {
-    @apply p-4 space-y-4;
-  }
-
-  .theme-category {
-    @apply space-y-2;
-  }
-
-  .category-title {
-    @apply flex items-center gap-2 text-sm font-bold text-gray-300;
-  }
-
-  .category-icon {
-    @apply text-lg;
-  }
-
-  .themes-grid {
-    @apply grid grid-cols-1 gap-2;
+  .theme-list {
+    @apply p-2;
   }
 
   .theme-option {
-    @apply flex items-center gap-3 p-3 rounded-lg border border-gray-600;
-    @apply hover:border-cyan-400/50 hover:bg-gray-800/50 transition-all;
-    @apply cursor-pointer relative;
+    @apply w-full p-3 rounded-md;
+    @apply text-left transition-all;
+    @apply hover:bg-surface;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary;
   }
 
   .theme-option.active {
-    @apply border-cyan-400 bg-cyan-500/20;
+    @apply bg-primary/10;
   }
 
-  .theme-option.previewing {
-    @apply border-yellow-400/50 bg-yellow-500/10;
+  .option-content {
+    @apply space-y-2;
   }
 
-  .theme-colors {
-    @apply flex gap-1;
+  .option-header {
+    @apply flex items-center justify-between;
   }
 
-  .color-swatch {
-    @apply w-4 h-4 rounded border border-gray-600;
+  .option-name {
+    @apply font-medium text-text;
   }
 
-  .theme-info {
-    @apply flex-1 text-left;
+  .check-icon {
+    @apply text-primary;
   }
 
-  .theme-title {
-    @apply block text-sm font-medium text-gray-300;
+  .option-preview {
+    @apply flex gap-1 h-6;
   }
 
-  .theme-desc {
-    @apply block text-xs text-gray-400;
+  .preview-bar {
+    @apply flex-1 rounded;
   }
 
-  .active-indicator {
-    @apply absolute top-2 right-2 text-cyan-400 text-sm;
+  .option-description {
+    @apply text-xs text-text-secondary;
+  }
+
+  .auto-switch-section {
+    @apply p-4 border-t border-border;
+    @apply bg-surface/50;
+  }
+
+  .auto-switch-label {
+    @apply flex items-center gap-2 cursor-pointer;
+  }
+
+  .auto-switch-checkbox {
+    @apply w-4 h-4 rounded;
+    @apply text-primary focus:ring-primary;
+    @apply border-border;
+  }
+
+  .auto-switch-text {
+    @apply text-sm font-medium text-text;
   }
 
   .auto-switch-info {
-    @apply flex items-center gap-2 p-3 bg-cyan-500/10 border-t border-cyan-400/30;
-    @apply text-xs text-cyan-400;
+    @apply mt-2 text-xs text-text-secondary;
+    @apply leading-relaxed;
   }
 
-  .info-icon {
-    @apply text-lg;
-  }
-
-  /* Export Modal */
-  .modal-backdrop {
-    @apply fixed inset-0 bg-black/75 backdrop-blur-sm flex items-center justify-center z-50;
-  }
-
-  .export-modal {
-    @apply bg-gray-900 border border-cyan-400/30 rounded-lg shadow-xl;
-    @apply max-w-2xl w-full mx-4;
-  }
-
-  .modal-header {
-    @apply flex items-center justify-between p-4 border-b border-gray-700;
-  }
-
-  .modal-header h3 {
-    @apply text-lg font-bold text-cyan-400;
-  }
-
-  .close-btn {
-    @apply text-gray-400 hover:text-white text-xl;
-  }
-
-  .modal-body {
-    @apply p-4 space-y-4;
-  }
-
-  .export-description {
-    @apply text-sm text-gray-400;
-  }
-
-  .config-container {
-    @apply relative;
-  }
-
-  .config-textarea {
-    @apply w-full h-40 p-3 bg-gray-800 border border-gray-600 rounded;
-    @apply text-sm font-mono text-gray-300 resize-none;
-  }
-
-  .modal-actions {
-    @apply flex gap-3 justify-end;
-  }
-
-  /* Mobile responsiveness */
-  @media (max-width: 768px) {
-    .theme-dropdown {
-      @apply left-0 right-0 min-w-0;
+  /* Animation utilities */
+  @keyframes fade-in {
+    from {
+      opacity: 0;
     }
-
-    .themes-grid {
-      @apply grid-cols-1;
+    to {
+      opacity: 1;
     }
+  }
 
-    .theme-option {
-      @apply flex-col items-start gap-2;
+  @keyframes slide-in-from-top-2 {
+    from {
+      transform: translateY(-0.5rem);
     }
+    to {
+      transform: translateY(0);
+    }
+  }
 
-    .theme-colors {
-      @apply order-2;
-    }
+  .animate-in {
+    animation-fill-mode: both;
+  }
 
-    .export-modal {
-      @apply mx-2;
-    }
+  .fade-in {
+    animation-name: fade-in;
+  }
+
+  .slide-in-from-top-2 {
+    animation-name: slide-in-from-top-2;
   }
 </style>

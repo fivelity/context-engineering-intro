@@ -1,52 +1,43 @@
-# FastAPI and web framework dependencies
-fastapi[all]==0.104.1
-uvicorn[standard]==0.24.0
-websockets==12.0
-python-multipart==0.0.6
+# SenseCanvas Server Requirements
+# Python 3.11+ recommended
 
-# Data validation and serialization
+# Core Web Framework
+fastapi[all]>=0.115.0
+uvicorn[standard]>=0.32.0
+websockets>=13.1
+
+# Data Validation & Serialization
 pydantic[email]>=2.11.0
-pydantic-settings==2.0.3
+pydantic-settings>=2.6.0
 
-# Hardware monitoring dependencies
-psutil==5.9.6
-pythonnet==3.0.3
+# Hardware Monitoring
+psutil>=6.1.0
+pythonnet>=3.0.5  # For LibreHardwareMonitor on Windows
 
-# AI generation (Google Genkit - using placeholder until official release)
-google-generativeai==0.3.2
-google-cloud-aiplatform==1.35.0
+# AI Integration
+google-generativeai>=0.8.3  # Google Genkit/Gemini
 
-# Database and storage
-aiosqlite==0.19.0
-sqlalchemy[asyncio]==2.0.23
+# Async Support
+aiofiles>=24.1.0
+httpx>=0.27.2
 
-# HTTP client for API calls
-httpx==0.25.2
-aiofiles==23.2.1
+# Utilities
+python-multipart>=0.0.15
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
 
-# Caching and rate limiting
-cachetools==5.3.2
-slowapi==0.1.9
+# Development & Testing
+pytest>=8.3.3
+pytest-asyncio>=0.24.0
+pytest-cov>=6.0.0
 
-# Logging and monitoring
-structlog==23.2.0
-python-json-logger==2.0.7
+# Code Quality
+ruff>=0.8.0
+mypy>=1.13.0
+black>=24.10.0
 
-# Development dependencies
-pytest==7.4.3
-pytest-asyncio==0.21.1
-pytest-cov==4.1.0
-black==23.11.0
-isort==5.12.0
-mypy==1.7.1
-ruff==0.1.6
+# Monitoring & Logging
+structlog>=24.4.0
 
-# Security
-python-jose[cryptography]==3.3.0
-passlib[bcrypt]==1.7.4
-
-# Environment management
-python-dotenv==1.0.0
-
-# Async support
-anyio==4.1.0
+# Environment Management
+python-dotenv>=1.0.1
