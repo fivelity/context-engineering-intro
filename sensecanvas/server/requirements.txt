@@ -1,0 +1,52 @@
+# FastAPI and web framework dependencies
+fastapi[all]==0.104.1
+uvicorn[standard]==0.24.0
+websockets==12.0
+python-multipart==0.0.6
+
+# Data validation and serialization
+pydantic[email]>=2.11.0
+pydantic-settings==2.0.3
+
+# Hardware monitoring dependencies
+psutil==5.9.6
+pythonnet==3.0.3
+
+# AI generation (Google Genkit - using placeholder until official release)
+google-generativeai==0.3.2
+google-cloud-aiplatform==1.35.0
+
+# Database and storage
+aiosqlite==0.19.0
+sqlalchemy[asyncio]==2.0.23
+
+# HTTP client for API calls
+httpx==0.25.2
+aiofiles==23.2.1
+
+# Caching and rate limiting
+cachetools==5.3.2
+slowapi==0.1.9
+
+# Logging and monitoring
+structlog==23.2.0
+python-json-logger==2.0.7
+
+# Development dependencies
+pytest==7.4.3
+pytest-asyncio==0.21.1
+pytest-cov==4.1.0
+black==23.11.0
+isort==5.12.0
+mypy==1.7.1
+ruff==0.1.6
+
+# Security
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+
+# Environment management
+python-dotenv==1.0.0
+
+# Async support
+anyio==4.1.0
