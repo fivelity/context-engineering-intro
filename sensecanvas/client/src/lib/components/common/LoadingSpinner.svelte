@@ -74,11 +74,13 @@ Animated loading indicator with size options and theme support
 
 <style>
   .spinner-container {
-    @apply inline-flex items-center gap-2;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
   }
 
   .spinner-svg {
-    @apply animate-spin;
+    animation: spin 1s linear infinite;
   }
 
   .spinner-circle {
@@ -87,7 +89,8 @@ Animated loading indicator with size options and theme support
   }
 
   .spinner-label {
-    @apply text-sm text-text-secondary;
+    font-size: 0.875rem;
+    color: var(--color-textSecondary);
   }
 
   @keyframes spinner-dash {

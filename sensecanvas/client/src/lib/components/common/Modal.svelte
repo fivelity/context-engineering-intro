@@ -180,45 +180,79 @@ Reusable modal dialog with backdrop, animations, and keyboard support
 
 <style>
   .modal-backdrop {
-    @apply fixed inset-0 z-50 overflow-y-auto;
-    @apply bg-black bg-opacity-50 backdrop-blur-sm;
-    @apply flex items-center justify-center p-4;
-    @apply animate-in fade-in duration-200;
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    overflow-y: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    animation: fade-in 0.2s ease-out;
   }
 
   .modal-container {
-    @apply relative w-full mx-auto;
-    @apply bg-background rounded-lg shadow-2xl;
-    @apply border border-border;
-    @apply animate-in zoom-in-95 duration-200;
-    @apply max-h-[90vh] overflow-hidden flex flex-col;
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    background-color: var(--color-background);
+    border-radius: 0.5rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--color-border);
+    animation: zoom-in-95 0.2s ease-out;
+    max-height: 90vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
   }
 
   .modal-header {
-    @apply flex items-center justify-between p-6 pb-4;
-    @apply border-b border-border;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 1.5rem 1rem 1.5rem;
+    border-bottom: 1px solid var(--color-border);
   }
 
   .modal-title {
-    @apply text-xl font-semibold text-text;
-    @apply font-display;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text);
+    font-family: 'Orbitron', monospace;
   }
 
   .modal-close {
-    @apply p-2 -m-2 rounded-lg;
-    @apply text-text-secondary hover:text-text;
-    @apply hover:bg-surface transition-colors;
-    @apply focus:outline-none focus:ring-2 focus:ring-primary;
+    padding: 0.5rem;
+    margin: -0.5rem;
+    border-radius: 0.5rem;
+    color: var(--color-text-secondary);
+    transition: color 0.2s ease, background-color 0.2s ease;
+    border: none;
+    cursor: pointer;
+  }
+
+  .modal-close:hover {
+    color: var(--color-text);
+    background-color: var(--color-surface);
+  }
+
+  .modal-close:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-primary);
   }
 
   .modal-content {
-    @apply p-6 overflow-y-auto flex-1;
+    padding: 1.5rem;
+    overflow-y: auto;
+    flex: 1;
   }
 
   .modal-footer {
-    @apply p-6 pt-4;
-    @apply border-t border-border;
-    @apply bg-surface;
+    padding: 1.5rem 1.5rem 1rem 1.5rem;
+    border-top: 1px solid var(--color-border);
+    background-color: var(--color-surface);
   }
 
   /* Animation utilities */

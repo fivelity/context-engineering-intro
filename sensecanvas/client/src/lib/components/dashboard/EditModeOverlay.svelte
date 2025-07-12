@@ -453,12 +453,22 @@ Visual overlay showing edit mode hints, guidelines, and quick actions.
   }
 
   .warning-text {
-    @apply text-sm text-yellow-300;
+    font-size: 0.875rem;
+    color: #fde047;
   }
 
   .warning-btn {
-    @apply px-2 py-1 bg-yellow-500/20 border border-yellow-400/30 rounded text-xs;
-    @apply text-yellow-400 hover:bg-yellow-500/30 transition-colors;
+    padding: 0.125rem 0.5rem;
+    background-color: rgba(234, 179, 8, 0.2);
+    border: 1px solid rgba(234, 179, 8, 0.3);
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    color: #fde047;
+    transition: background-color 0.2s ease;
+  }
+
+  .warning-btn:hover {
+    background-color: rgba(234, 179, 8, 0.3);
   }
 
   @keyframes tip-pulse {
@@ -469,28 +479,29 @@ Visual overlay showing edit mode hints, guidelines, and quick actions.
   /* Mobile responsiveness */
   @media (max-width: 768px) {
     .hints-panel,
-    .shortcuts-panel {
-      @apply max-w-xs;
-    }
+      .shortcuts-panel {
+    max-width: 20rem;
+  }
 
-    .drop-zone {
-      @apply w-20 h-20;
-    }
+  .drop-zone {
+    width: 5rem;
+    height: 5rem;
+  }
 
-    .drop-icon {
-      @apply text-lg;
-    }
+  .drop-icon {
+    font-size: 1.125rem;
+  }
 
-    .drop-text {
-      @apply text-xs;
-    }
+  .drop-text {
+    font-size: 0.75rem;
+  }
 
-    .empty-title {
-      @apply text-xl;
-    }
+  .empty-title {
+    font-size: 1.25rem;
+  }
 
-    .empty-actions {
-      @apply flex-col;
-    }
+  .empty-actions {
+    flex-direction: column;
+  }
   }
 </style>

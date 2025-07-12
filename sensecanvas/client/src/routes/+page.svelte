@@ -187,98 +187,140 @@ Full dashboard implementation with real-time hardware monitoring
 
 <style>
   .dashboard-page {
-    @apply min-h-screen bg-background text-text;
-    @apply flex flex-col;
+    min-height: 100vh;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    display: flex;
+    flex-direction: column;
   }
   
   .dashboard-header {
-    @apply flex items-center justify-between;
-    @apply px-6 py-4;
-    @apply bg-surface border-b border-border;
-    @apply shadow-sm;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
   }
   
   .header-left {
-    @apply flex items-center gap-6;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
   }
   
   .dashboard-title {
-    @apply flex items-center gap-2;
-    @apply text-2xl font-bold;
-    @apply text-primary;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-primary);
   }
   
   .title-icon {
-    @apply text-3xl;
+    font-size: 1.875rem;
   }
   
   .header-right {
-    @apply flex items-center gap-4;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
   }
   
   .dashboard-main {
-    @apply flex-1;
-    @apply relative;
-    @apply overflow-hidden;
+    flex: 1;
+    position: relative;
+    overflow: hidden;
   }
   
   .loading-container {
-    @apply absolute inset-0;
-    @apply flex items-center justify-center;
-    @apply bg-background/80 backdrop-blur-sm;
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(var(--color-background), 0.8);
+    backdrop-filter: blur(4px);
   }
   
   .error-container {
-    @apply absolute inset-0;
-    @apply flex flex-col items-center justify-center;
-    @apply p-8 text-center;
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
   }
   
   .error-icon {
-    @apply text-6xl mb-4;
+    font-size: 3.75rem;
+    margin-bottom: 1rem;
   }
   
   .error-title {
-    @apply text-2xl font-bold text-error mb-2;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-error);
+    margin-bottom: 0.5rem;
   }
   
   .error-message {
-    @apply text-text-secondary mb-6;
-    @apply max-w-md;
+    color: var(--color-textSecondary);
+    margin-bottom: 1.5rem;
+    max-width: 28rem;
   }
   
   .retry-button {
-    @apply px-6 py-3 rounded-lg;
-    @apply bg-primary text-background font-medium;
-    @apply hover:bg-primary/90 transition-colors;
-    @apply focus:outline-none focus:ring-2 focus:ring-primary;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    background-color: var(--color-primary);
+    color: var(--color-background);
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    border: none;
+    cursor: pointer;
+  }
+
+  .retry-button:hover {
+    background-color: rgba(var(--color-primary), 0.9);
+  }
+
+  .retry-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-primary);
   }
   
   /* Theme-aware responsive adjustments */
   @media (max-width: 768px) {
     .dashboard-header {
-      @apply px-4 py-3;
-      @apply flex-col gap-3;
+      padding: 0.75rem 1rem;
+      flex-direction: column;
+      gap: 0.75rem;
     }
     
     .header-left,
     .header-right {
-      @apply w-full justify-between;
+      width: 100%;
+      justify-content: space-between;
     }
     
     .dashboard-title {
-      @apply text-xl;
+      font-size: 1.25rem;
     }
   }
   
   /* High contrast mode support */
   @media (prefers-contrast: high) {
     .dashboard-page {
-      @apply border-2 border-text;
+      border: 2px solid var(--color-text);
     }
     
     .dashboard-header {
-      @apply border-b-2;
+      border-bottom-width: 2px;
     }
   }
   

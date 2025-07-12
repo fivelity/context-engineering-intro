@@ -22,8 +22,9 @@ Base widget using Cosmic UI Frame component with SVG shapes
     config, 
     isEditMode = false, 
     isSelected = false,
-    gridBounds = { x: 0, y: 0, width: 1920, height: 1080 }
-  }: Props = $props();
+    gridBounds = { x: 0, y: 0, width: 1920, height: 1080 },
+    children
+  }: Props & { children: any } = $props();
 
   const dispatch = createEventDispatcher<{
     positionChanged: { x: number; y: number };
@@ -99,7 +100,7 @@ Base widget using Cosmic UI Frame component with SVG shapes
     onDrag: handleDrag,
     onDragStart: handleDragStart,
     onDragEnd: handleDragEnd
-  }));
+  } as any));
 
   // Effects for alerts
   $effect(() => {
@@ -140,7 +141,10 @@ Base widget using Cosmic UI Frame component with SVG shapes
       new Notification(`${config.title} Alert`, {
         body: `${config.sensorType.toUpperCase()} at ${widgetValue().toFixed(1)}%`,
         icon: '/icons/alert.svg',
-        tag: `alert-${config.id}`
+        tag: `alert-${config.id}`,
+        type: 'error',
+        title: `${config.title} Alert`,
+        message: `${config.sensorType.toUpperCase()} at ${widgetValue().toFixed(1)}%`
       });
     }
   }
@@ -153,7 +157,7 @@ Base widget using Cosmic UI Frame component with SVG shapes
   class:dragging={isDragging}
   class:selected={isSelected}
   style={Object.entries(positionStyles()).map(([k, v]) => `${k}: ${v}`).join('; ')}
-  use:draggable={dragOptions}
+  use:draggable={dragOptions()}
   onclick={handleSelect}
   onmouseenter={() => isHovered = true}
   onmouseleave={() => isHovered = false}
@@ -162,12 +166,8 @@ Base widget using Cosmic UI Frame component with SVG shapes
   aria-label={`${config.title} widget`}
 >
   <Frame
-    variant={frameVariant}
-    {borderColor}
-    glowColor={borderColor()}
-    {glowIntensity}
-    backgroundColor="var(--color-dark-surface)"
-    animated={alertLevel() !== 'normal'}
+    className="widget-frame"
+    enableBackdropBlur={true}
   >
     <!-- Widget header -->
     {#if isEditMode || isHovered}
@@ -188,14 +188,7 @@ Base widget using Cosmic UI Frame component with SVG shapes
 
     <!-- Widget content -->
     <div class="widget-content">
-      <slot 
-        {config}
-        {widgetValue}
-        {alertLevel}
-        borderColor={borderColor()}
-        {isEditMode}
-        {isSelected}
-      />
+      {@render children?.()}
     </div>
 
     <!-- Alert badge -->

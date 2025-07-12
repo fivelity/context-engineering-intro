@@ -100,7 +100,7 @@ Theme switching UI with previews and auto-switch options
         <div 
           class="preview-dot"
           style="background-color: {color}; animation-delay: {i * 0.1}s"
-        />
+        ></div>
       {/each}
     </div>
     
@@ -166,7 +166,7 @@ Theme switching UI with previews and auto-switch options
                     <div 
                       class="preview-bar"
                       style="background-color: {color}"
-                    />
+                    ></div>
                   {/each}
                 </div>
               {/if}
@@ -211,120 +211,181 @@ Theme switching UI with previews and auto-switch options
 
 <style>
   .theme-selector {
-    @apply relative;
+    position: relative;
   }
 
   .theme-button {
-    @apply flex items-center gap-2 px-3 py-2;
-    @apply rounded-lg border border-border;
-    @apply bg-surface hover:bg-surface/80;
-    @apply text-text transition-all;
-    @apply focus:outline-none focus:ring-2 focus:ring-primary;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    transition: all 0.2s ease;
+    border: none;
+    cursor: pointer;
+  }
+
+  .theme-button:hover {
+    background-color: rgba(var(--color-surface), 0.8);
+  }
+
+  .theme-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-primary);
   }
 
   .theme-selector.compact .theme-button {
-    @apply px-2 py-1;
+    padding: 0.25rem 0.5rem;
   }
 
   .theme-preview {
-    @apply flex gap-1;
+    display: flex;
+    gap: 0.25rem;
   }
 
   .preview-dot {
-    @apply w-4 h-4 rounded-full;
-    @apply animate-pulse;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
 
   .theme-selector.compact .preview-dot {
-    @apply w-3 h-3;
+    width: 0.75rem;
+    height: 0.75rem;
   }
 
   .theme-name {
-    @apply text-sm font-medium;
+    font-size: 0.875rem;
+    font-weight: 500;
   }
 
   .dropdown-icon {
-    @apply transition-transform duration-200;
+    transition: transform 0.2s ease;
   }
 
   .rotate-180 {
-    @apply transform rotate-180;
+    transform: rotate(180deg);
   }
 
   .theme-dropdown {
-    @apply absolute top-full mt-2 right-0;
-    @apply w-72 rounded-lg;
-    @apply bg-background border border-border;
-    @apply shadow-2xl;
-    @apply animate-in fade-in slide-in-from-top-2 duration-200;
-    @apply z-50;
+    position: absolute;
+    top: 100%;
+    margin-top: 0.5rem;
+    right: 0;
+    width: 18rem;
+    border-radius: 0.5rem;
+    background-color: var(--color-background);
+    border: 1px solid var(--color-border);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    animation: fade-in 0.2s ease-out, slide-in-from-top-2 0.2s ease-out;
+    z-index: 50;
   }
 
   .theme-list {
-    @apply p-2;
+    padding: 0.5rem;
   }
 
   .theme-option {
-    @apply w-full p-3 rounded-md;
-    @apply text-left transition-all;
-    @apply hover:bg-surface;
-    @apply focus:outline-none focus:ring-2 focus:ring-primary;
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 0.375rem;
+    text-align: left;
+    transition: all 0.2s ease;
+    border: none;
+    cursor: pointer;
+    background: none;
+  }
+
+  .theme-option:hover {
+    background-color: var(--color-surface);
+  }
+
+  .theme-option:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-primary);
   }
 
   .theme-option.active {
-    @apply bg-primary/10;
+    background-color: rgba(var(--color-primary), 0.1);
   }
 
   .option-content {
-    @apply space-y-2;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
   }
 
   .option-header {
-    @apply flex items-center justify-between;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .option-name {
-    @apply font-medium text-text;
+    font-weight: 500;
+    color: var(--color-text);
   }
 
   .check-icon {
-    @apply text-primary;
+    color: var(--color-primary);
   }
 
   .option-preview {
-    @apply flex gap-1 h-6;
+    display: flex;
+    gap: 0.25rem;
+    height: 1.5rem;
   }
 
   .preview-bar {
-    @apply flex-1 rounded;
+    flex: 1;
+    border-radius: 0.25rem;
   }
 
   .option-description {
-    @apply text-xs text-text-secondary;
+    font-size: 0.75rem;
+    color: var(--color-textSecondary);
   }
 
   .auto-switch-section {
-    @apply p-4 border-t border-border;
-    @apply bg-surface/50;
+    padding: 1rem;
+    border-top: 1px solid var(--color-border);
+    background-color: rgba(var(--color-surface), 0.5);
   }
 
   .auto-switch-label {
-    @apply flex items-center gap-2 cursor-pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
   }
 
   .auto-switch-checkbox {
-    @apply w-4 h-4 rounded;
-    @apply text-primary focus:ring-primary;
-    @apply border-border;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 0.25rem;
+    color: var(--color-primary);
+    border: 1px solid var(--color-border);
+  }
+
+  .auto-switch-checkbox:focus {
+    box-shadow: 0 0 0 2px var(--color-primary);
   }
 
   .auto-switch-text {
-    @apply text-sm font-medium text-text;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text);
   }
 
   .auto-switch-info {
-    @apply mt-2 text-xs text-text-secondary;
-    @apply leading-relaxed;
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--color-textSecondary);
+    line-height: 1.6;
   }
 
   /* Animation utilities */

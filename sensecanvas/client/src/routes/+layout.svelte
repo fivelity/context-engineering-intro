@@ -9,6 +9,8 @@ Global layout with CSS imports and theme configuration.
   // Import Google Fonts for the sci-fi aesthetic
   import { onMount } from 'svelte';
   
+  let { children } = $props();
+  
   onMount(() => {
     // Load Orbitron font for the sci-fi look
     if (typeof document !== 'undefined') {
@@ -41,7 +43,7 @@ Global layout with CSS imports and theme configuration.
 </svelte:head>
 
 <main class="sensecanvas-app">
-  <slot />
+  {@render children()}
 </main>
 
 <style>

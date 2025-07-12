@@ -202,56 +202,97 @@ Displays alert notifications with auto-dismiss and actions
 
 <style>
   .notification-container {
-    @apply fixed z-50;
-    @apply flex flex-col gap-4;
-    @apply max-w-sm w-full;
+    position: fixed;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 24rem;
+    width: 100%;
     pointer-events: none;
   }
 
   .notification {
-    @apply relative flex gap-3 p-4;
-    @apply rounded-lg shadow-lg;
-    @apply bg-opacity-10 border;
-    @apply animate-in slide-in-from-top-2 duration-300;
+    position: relative;
+    display: flex;
+    gap: 0.75rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid;
+    animation: slide-in-from-top-2 0.3s ease-out;
     pointer-events: auto;
   }
 
   .notification-icon {
-    @apply flex-shrink-0;
+    flex-shrink: 0;
   }
 
   .notification-content {
-    @apply flex-1 min-w-0;
+    flex: 1;
+    min-width: 0;
   }
 
   .notification-title {
-    @apply font-semibold text-sm;
-    @apply text-text;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--color-text);
   }
 
   .notification-message {
-    @apply mt-1 text-sm;
-    @apply text-text-secondary;
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+    color: var(--color-textSecondary);
   }
 
   .notification-actions {
-    @apply mt-3 flex gap-2;
+    margin-top: 0.75rem;
+    display: flex;
+    gap: 0.5rem;
   }
 
   .notification-action {
-    @apply px-3 py-1 text-sm font-medium;
-    @apply rounded-md;
-    @apply bg-primary bg-opacity-10 text-primary;
-    @apply hover:bg-opacity-20 transition-colors;
-    @apply focus:outline-none focus:ring-2 focus:ring-primary;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 0.375rem;
+    background-color: rgba(var(--color-primary), 0.1);
+    color: var(--color-primary);
+    transition: background-color 0.2s ease;
+    border: none;
+    cursor: pointer;
+  }
+
+  .notification-action:hover {
+    background-color: rgba(var(--color-primary), 0.2);
+  }
+
+  .notification-action:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-primary);
   }
 
   .notification-close {
-    @apply absolute top-2 right-2;
-    @apply p-1 rounded-md;
-    @apply text-text-secondary hover:text-text;
-    @apply hover:bg-surface transition-colors;
-    @apply focus:outline-none focus:ring-2 focus:ring-primary;
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    padding: 0.25rem;
+    border-radius: 0.375rem;
+    color: var(--color-textSecondary);
+    transition: color 0.2s ease, background-color 0.2s ease;
+    border: none;
+    cursor: pointer;
+  }
+
+  .notification-close:hover {
+    color: var(--color-text);
+    background-color: var(--color-surface);
+  }
+
+  .notification-close:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-primary);
   }
 
   /* Animation utilities */
